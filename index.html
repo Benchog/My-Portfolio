@@ -1051,24 +1051,24 @@
 
         // AI Chatbot simulation
         function initChatbot() {
-            // Create chatbot button
             const chatbotButton = document.createElement('div');
             chatbotButton.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-                background: var(--gold-gradient);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-                z-index: 1000;
-                transition: all 0.3s ease;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            ackground: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
             `;
+            
             chatbotButton.innerHTML = '<i class="fas fa-comments" style="font-size: 1.5rem; color: var(--primary-blue);"></i>';
             
             chatbotButton.addEventListener('mouseenter', () => {
@@ -1082,11 +1082,88 @@
             });
             
             chatbotButton.addEventListener('click', () => {
-                alert('Hi! I\'m Benchog\'s AI assistant. I\'d love to chat about his projects, skills, or how he can help with your next big idea! 🚀\n\n(This is a demo - in the full version, I\'d be a fully functional AI chatbot!)');
+                const chatWindow = document.getElementById('chatWindow');
+                chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
             });
-            
             document.body.appendChild(chatbotButton);
-        }
+
+            function sendMessage() {
+                const input = document.getElementById('chatInput').value.trim();
+                if (input === "") return;
+                
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `<div style="margin: 5px 0;">You: ${input}</div>`;
+                
+                let reply = "Sorry boss, I didn't catch that. Could you rephrase it?";
+                
+                const msg = input.toLowerCase();
+                
+                // Greeting
+                if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey")) {
+                    reply = "Hello boss! I'm Optimistic Jim, Benchog Patrick's AI assistant. Ask me anything about his work, skills, or projects!";
+       // About me
+                
+                } else if (msg.includes("who are you") || msg.includes("benchog") || msg.includes("patrick") || msg.includes("about you")) {
+                    reply = "I'm Optimistic Jim, an AI chatbot built into Benchog Patrick's portfolio. Patrick is a visionary mechanical engineer, web developer, AI innovator, and community advocate from Ghana.";
+                    
+        // Skills
+  } else if (msg.includes("skills") || msg.includes("what can you do")) {
+    reply = "Benchog Patrick's core skills include Mechanical Engineering Design, Web Development, AI & Automation, Data Analysis, Leadership, and Problem-Solving.";
+  
+  // Projects
+  } else if (msg.includes("projects") || msg.includes("what have you built")) {
+    reply = "Check out Patrick's awesome projects in the Projects section: a Water Treatment System for dugout communities, BechCare AI for healthcare, and a Voice Assistant Beyond Siri!";
+  
+  // Services
+  } else if (msg.includes("services") || msg.includes("what do you offer") || msg.includes("what services")) {
+    reply = "Patrick offers Custom Web Development, AI Voice Assistants, Mechanical Engineering Design, Data Analysis, Thesis Editing, and Startup Branding.";
+  
+  // Contact
+  } else if (msg.includes("contact") || msg.includes("how do i reach you") || msg.includes("email") || msg.includes("whatsapp")) {
+    reply = "You can reach Patrick via the contact section below, or on WhatsApp: https://wa.me/233XXXXXXXXX or email: yourmail@example.com.";
+  
+  // Thanks
+  } else if (msg.includes("thank")) {
+    reply = "You're always welcome boss! 🚀 Let me know if you need anything else.";
+
+  // Bye
+  } else if (msg.includes("bye") || msg.includes("goodbye")) {
+    reply = "Goodbye boss! Stay optimistic and keep building!";
+  }
+
+  chatMessages.innerHTML += `<div style="color: var(--accent-gold); margin: 5px 0;">Bot: ${reply}</div>`;
+
+  document.getElementById('chatInput').value = "";
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+  // Add chat window div dynamically
+  const chatWindow = document.createElement('div');
+  chatWindow.id = 'chatWindow';
+  chatWindow.style.cssText = `
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: #152039;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  `;
+  chatWindow.innerHTML = `
+    <div id="chatMessages" style="height: 85%; overflow-y: auto; margin-bottom: 10px;"></div>
+    <input type="text" id="chatInput" placeholder="Type a message..." style="width: 70%; padding: 6px; border-radius: 5px; border: none;">
+    <button onclick="sendMessage()" style="width: 25%; padding: 6px; margin-left: 5px; border-radius: 5px; background: var(--accent-gold); border: none; color: var(--primary-blue); cursor: pointer;">Send</button>
+  `;
+  document.body.appendChild(chatWindow);
+}
+
 
         // Cursor trail effect
         function initCursorTrail() {
