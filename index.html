@@ -557,6 +557,28 @@
                 display: none;
             }
 
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image img {
+                width: 100%;
+                height: auto;
+            }
+            
+            .about-text {
+                text-align: justify;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-text {
+                padding: 0 10px;
+            }
+        }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
