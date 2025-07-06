@@ -745,9 +745,6 @@
     </style>
 </head>
 <body>
-    <div class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </div>
 
     <!-- Dark Mode Toggle -->
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">
@@ -766,6 +763,9 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
@@ -1353,6 +1353,12 @@
 
         // Initialize all functions when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile nav toggle
+document.getElementById('navToggle').addEventListener('click', function() {
+  const navLinks = document.querySelector('.nav-links');
+  navLinks.classList.toggle('open');
+});
+
             createParticles();
             animateRotatingText();
             loadDarkMode();
@@ -1373,12 +1379,6 @@
                 if (e.key === 'Escape') {
                     // Close any open modals or overlays
                     document.querySelectorAll('.greeting, .modal').forEach(el => el.remove());
-                    const menuToggle = document.getElementById('menuToggle');
-                    const navLinks = document.querySelector('.nav-links');
-                    
-                    menuToggle.addEventListener('click', () => {
-                        navLinks.classList.toggle('open');
-                    });
 
                 }
             });
