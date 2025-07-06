@@ -1130,7 +1130,7 @@
                     greeting.innerHTML = `
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-volume-up" style="color: var(--accent-gold);"></i>
-                            <span>"Welcome to Benchog Patrick's world — let's create something legendary!"</span>
+                            <span>"Welcome to Patrick's world — let's create something legendary!"</span>
                         </div>
                         <button onclick="this.parentElement.remove()" style="position: absolute; top: 5px; right: 10px; background: none; border: none; color: white; cursor: pointer;">×</button>
                     `;
@@ -1151,117 +1151,118 @@
 
         // AI Chatbot simulation
         function initChatbot() {
-  const chatbotButton = document.createElement('div');
-  chatbotButton.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: var(--gold-gradient);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-    z-index: 1000;
-    transition: all 0.3s ease;
-  `;
-  chatbotButton.innerHTML = '<i class="fas fa-comments" style="font-size: 1.5rem; color: var(--primary-blue);"></i>';
-
-  chatbotButton.addEventListener('mouseenter', () => {
-    chatbotButton.style.transform = 'scale(1.1)';
-    chatbotButton.style.boxShadow = '0 6px 20px rgba(255, 215, 0, 0.5)';
-  });
-
-  chatbotButton.addEventListener('mouseleave', () => {
-    chatbotButton.style.transform = 'scale(1)';
-    chatbotButton.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.3)';
-  });
-
-  chatbotButton.addEventListener('click', () => {
-    const chatWindow = document.getElementById('chatWindow');
-    if (chatWindow) {
-      chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
-    }
-  });
-
-  document.body.appendChild(chatbotButton);
-
-  // Create chatbot window dynamically
-  const chatWindow = document.createElement('div');
-  chatWindow.id = 'chatWindow';
-  chatWindow.style.cssText = `
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 300px;
-    height: 400px;
-    background: #152039;
-    color: white;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 1000;
-    overflow-y: auto;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-  `;
-
-  chatWindow.innerHTML = `
-    <div id="chatMessages" style="height: 85%; overflow-y: auto; margin-bottom: 10px;"></div>
-    <input type="text" id="chatInput" placeholder="Type a message..." style="width: 70%; padding: 6px; border-radius: 5px; border: none;">
-    <button id="sendButton" style="width: 25%; padding: 6px; margin-left: 5px; border-radius: 5px; background: var(--accent-gold); border: none; color: var(--primary-blue); cursor: pointer;">Send</button>
-  `;
-
-  document.body.appendChild(chatWindow);
-
-  // Attach event listener to Send button
-  document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-  // Allow Enter key to send message
-  chatWindow.querySelector("#chatInput").addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  });
-}
-
-// Working sendMessage function
-function sendMessage() {
-  const inputField = document.getElementById('chatInput');
-  const input = inputField.value.trim();
-  if (input === "") return;
-
-  const chatMessages = document.getElementById('chatMessages');
-  chatMessages.innerHTML += `<div style="margin: 5px 0;">You: ${input}</div>`;
-
-  let reply = "Sorry boss, I didn't get that.";
-
-  const msg = input.toLowerCase();
-
-  if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey")) {
-    reply = "Hello boss! I'm Optimistic Jim, Benchog Patrick's AI assistant. Ask me anything about his work, skills, or projects!";
-  } else if (msg.includes("who are you") || msg.includes("benchog") || msg.includes("patrick") || msg.includes("about you")) {
-    reply = "I'm Optimistic Jim, an AI chatbot built into Benchog Patrick's portfolio. Patrick is a visionary mechanical engineer, AI innovator, and creative leader from Ghana.";
-  } else if (msg.includes("skills") || msg.includes("what can you do") || msg.includes("abilities")) {
-    reply = "Benchog Patrick's skills include Mechanical Engineering Design, Web Development, AI & Automation, Data Analysis, Leadership, and Problem-Solving.";
-  } else if (msg.includes("projects") || msg.includes("what have you built") || msg.includes("portfolio")) {
-    reply = "Patrick's projects include a Water Treatment System for dugout communities, BechCare AI for healthcare, and a Voice Assistant Beyond Siri. Check them out in the Projects section above!";
-  } else if (msg.includes("services") || msg.includes("what do you offer") || msg.includes("what services")) {
-    reply = "Patrick offers Custom Web Development, AI Voice Assistants, Mechanical Engineering Design, Data Analysis, Thesis Editing, and Startup Branding.";
-  } else if (msg.includes("contact") || msg.includes("how do i reach you") || msg.includes("email") || msg.includes("whatsapp")) {
-    reply = "You can reach Patrick via the contact section below, on WhatsApp: https://wa.me/233XXXXXXXXX, or email: yourmail@example.com.";
-  } else if (msg.includes("thank")) {
-    reply = "You're always welcome boss! 🚀 Let me know if you need anything else.";
-  } else if (msg.includes("bye") || msg.includes("goodbye")) {
-    reply = "Goodbye boss! Stay optimistic and keep creating!";
-  }
-
-  chatMessages.innerHTML += `<div style="color: var(--accent-gold); margin: 5px 0;">Bot: ${reply}</div>`;
-  inputField.value = "";
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+            const chatbotButton = document.createElement('div');
+            chatbotButton.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            `;
+            
+            chatbotButton.innerHTML = '<i class="fas fa-comments" style="font-size: 1.5rem; color: var(--primary-blue);"></i>';
+            
+            chatbotButton.addEventListener('mouseenter', () => {
+                chatbotButton.style.transform = 'scale(1.1)';
+                chatbotButton.style.boxShadow = '0 6px 20px rgba(255, 215, 0, 0.5)';
+            });
+            
+            chatbotButton.addEventListener('mouseleave', () => {
+                chatbotButton.style.transform = 'scale(1)';
+                chatbotButton.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.3)';
+            });
+            
+            chatbotButton.addEventListener('click', () => {
+                const chatWindow = document.getElementById('chatWindow');
+                
+                if (chatWindow) {
+                    chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+            
+            document.body.appendChild(chatbotButton);
+            
+            // Create chatbot window dynamically
+            const chatWindow = document.createElement('div');
+            chatWindow.id = 'chatWindow';
+            chatWindow.style.cssText = `
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: #152039;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            `;
+            
+            chatWindow.innerHTML = `
+            <div id="chatMessages" style="height: 85%; overflow-y: auto; margin-bottom: 10px;"></div>
+            <input type="text" id="chatInput" placeholder="Type a message..." style="width: 70%; padding: 6px; border-radius: 5px; border: none;">
+            <button id="sendButton" style="width: 25%; padding: 6px; margin-left: 5px; border-radius: 5px; background: var(--accent-gold); border: none; color: var(--primary-blue); cursor: pointer;">Send</button>
+            `;
+            
+            document.body.appendChild(chatWindow);
+            
+            // Attach event listener to Send button
+            document.getElementById('sendButton').addEventListener('click', sendMessage);
+            
+            // Allow Enter key to send message
+            chatWindow.querySelector("#chatInput").addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        }
+        
+        // Working sendMessage function
+        function sendMessage() {
+            const inputField = document.getElementById('chatInput');
+            const input = inputField.value.trim();
+            if (input === "") return;
+            
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `<div style="margin: 5px 0;">You: ${input}</div>`;
+            
+            let reply = "Sorry boss, I didn't get that.";
+            const msg = input.toLowerCase();
+            
+            if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey")) {
+                reply = "Hello boss! I'm Optimistic, Benchog Patrick's AI assistant. Ask me anything about his work, skills, or projects!";
+            } else if (msg.includes("who are you") || msg.includes("benchog") || msg.includes("patrick") || msg.includes("about you")) {
+                reply = "I'm Optimistic, an AI chatbot built into Patrick's portfolio. Patrick is a visionary mechanical engineer, AI innovator, and creative leader from Ghana.";
+            } else if (msg.includes("skills") || msg.includes("what can you do") || msg.includes("abilities")) {
+                reply = "Patrick's skills include Mechanical Engineering Design, Web Development, AI & Automation, Data Analysis, Leadership, and Problem-Solving.";
+            } else if (msg.includes("projects") || msg.includes("what have you built") || msg.includes("portfolio")) {
+                reply = "Patrick's projects include a Water Treatment System for dugout communities, BechCare AI for healthcare, and a Voice Assistant Beyond Siri. Check them out in the Projects section above!";
+            } else if (msg.includes("services") || msg.includes("what do you offer") || msg.includes("what services")) {
+                reply = "Patrick offers Custom Web Development, AI Voice Assistants, Mechanical Engineering Design, Data Analysis, Thesis Editing, and Startup Branding.";
+            } else if (msg.includes("contact") || msg.includes("how do i reach you") || msg.includes("email") || msg.includes("whatsapp")) {
+                reply = "You can reach Patrick via the contact section below, on WhatsApp: https://wa.me/233XXXXXXXXX, or email: yourmail@example.com.";
+            } else if (msg.includes("thank")) {
+                reply = "You're always welcome boss! 🚀 Let me know if you need anything else.";
+            } else if (msg.includes("bye") || msg.includes("goodbye")) {
+                reply = "Goodbye boss! Stay optimistic and keep creating!";
+            }
+            
+            chatMessages.innerHTML += `<div style="color: var(--accent-gold); margin: 5px 0;">Bot: ${reply}</div>`;
+            inputField.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
 
 
 
