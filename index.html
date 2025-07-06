@@ -741,6 +741,12 @@
   }
 }
 
+    @media (max-width: 768px) {
+        .dark-mode-toggle {
+            top: 20px;
+            right: 80px; /* shift it left */
+        }
+    }
 
     </style>
 </head>
@@ -1354,7 +1360,7 @@
         // Initialize all functions when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile nav toggle
-document.getElementById('navToggle').addEventListener('click', function() {
+document.getElementById('menuToggle').addEventListener('click', function() {
   const navLinks = document.querySelector('.nav-links');
   navLinks.classList.toggle('open');
 });
