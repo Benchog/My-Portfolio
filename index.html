@@ -40,24 +40,38 @@
         }
 
         .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--accent-gold);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid var(--accent-gold);
+    border-radius: 10px;
+    width: 120px;
+    height: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-gold);
+    font-weight: bold;
+    font-size: 1rem;
+}
 
-        .dark-mode-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-        }
+.dark-mode-toggle:hover {
+    transform: scale(1.05);
+    background: rgba(255, 215, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+        /* Fix dark mode headings in Proof of Impact section */
+body.dark-mode .project-card h3 {
+    color: var(--accent-gold) !important;
+}
+
 
         /* Navigation */
         nav {
@@ -754,8 +768,9 @@
 
     <!-- Dark Mode Toggle -->
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-        <i class="fas fa-moon" id="darkModeIcon"></i>
-    </button>
+    <i class="fas fa-moon" id="darkModeIcon" style="margin-right:8px;"></i> Mode
+</button>
+
 
     <!-- Navigation -->
     <nav id="navbar">
