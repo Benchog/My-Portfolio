@@ -23,12 +23,142 @@
             --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
         }
 
+        body[data-color-scheme="royal"] {
+            --primary-blue: #0A1128;
+            --accent-gold: #FFD700;
+            --gradient-bg: linear-gradient(135deg, #0A1128 0%, #1e3c72 50%, #2a5298 100%);
+            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        body[data-color-scheme="emerald"] {
+            --primary-blue: #062b25;
+            --accent-gold: #34d399;
+            --gradient-bg: linear-gradient(135deg, #062b25 0%, #0e4f44 50%, #157a64 100%);
+            --gold-gradient: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        }
+
+        body[data-color-scheme="sunset"] {
+            --primary-blue: #2b0f2a;
+            --accent-gold: #ff8a3d;
+            --gradient-bg: linear-gradient(135deg, #2b0f2a 0%, #5a1e44 50%, #a03d3d 100%);
+            --gold-gradient: linear-gradient(135deg, #ff8a3d 0%, #ff6b6b 100%);
+        }
+
+        body[data-color-scheme="violet"] {
+            --primary-blue: #1b1235;
+            --accent-gold: #a78bfa;
+            --gradient-bg: linear-gradient(135deg, #1b1235 0%, #312e81 50%, #4f46e5 100%);
+            --gold-gradient: linear-gradient(135deg, #a78bfa 0%, #818cf8 100%);
+        }
+
+        body[data-color-scheme="obsidian"] {
+            --primary-blue: #0b0f19;
+            --accent-gold: #f59e0b;
+            --gradient-bg: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #1f2937 100%);
+            --gold-gradient: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+        }
+
+        body[data-color-scheme="aurora"] {
+            --primary-blue: #022c43;
+            --accent-gold: #22d3ee;
+            --gradient-bg: linear-gradient(135deg, #022c43 0%, #0f766e 50%, #0ea5e9 100%);
+            --gold-gradient: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+        }
+
+        body[data-color-scheme="rose-luxe"] {
+            --primary-blue: #2a1630;
+            --accent-gold: #f472b6;
+            --gradient-bg: linear-gradient(135deg, #2a1630 0%, #4c1d4a 50%, #7c2d5a 100%);
+            --gold-gradient: linear-gradient(135deg, #f472b6 0%, #fb7185 100%);
+        }
+
+        body[data-color-scheme="imperial"] {
+            --primary-blue: #1f1b06;
+            --accent-gold: #facc15;
+            --gradient-bg: linear-gradient(135deg, #1f1b06 0%, #3f2f08 50%, #6b4f12 100%);
+            --gold-gradient: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+        }
+
         body {
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
             overflow-x: hidden;
             background: var(--soft-white);
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Light-mode ambient animated background */
+        body:not(.dark-mode) {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 34%),
+                radial-gradient(circle at 88% 16%, rgba(14, 165, 233, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 28% 82%, rgba(16, 185, 129, 0.08) 0%, transparent 36%),
+                linear-gradient(180deg, #f5f8ff 0%, #f7fbff 45%, #f6f7fb 100%);
+        }
+
+        body:not(.dark-mode)::before,
+        body:not(.dark-mode)::after {
+            content: '';
+            position: fixed;
+            inset: -20%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.52;
+            filter: blur(50px);
+            animation: ambientDrift 24s ease-in-out infinite alternate;
+        }
+
+        body:not(.dark-mode)::before {
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.32), transparent 45%);
+        }
+
+        body:not(.dark-mode)::after {
+            background: radial-gradient(circle at 80% 70%, rgba(244, 114, 182, 0.24), transparent 48%);
+            animation-duration: 32s;
+        }
+
+        /* Dark-mode ambient animated background */
+        body.dark-mode {
+            background:
+                radial-gradient(circle at 12% 12%, rgba(99, 102, 241, 0.14) 0%, transparent 34%),
+                radial-gradient(circle at 84% 18%, rgba(34, 211, 238, 0.11) 0%, transparent 30%),
+                radial-gradient(circle at 24% 86%, rgba(168, 85, 247, 0.12) 0%, transparent 34%),
+                linear-gradient(180deg, #070b16 0%, #0a1128 55%, #0c132f 100%);
+        }
+
+        body.dark-mode::before,
+        body.dark-mode::after {
+            content: '';
+            position: fixed;
+            inset: -20%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(54px);
+            opacity: 0.46;
+            animation: ambientDriftDark 28s ease-in-out infinite alternate;
+        }
+
+        body.dark-mode::before {
+            background: radial-gradient(circle at 15% 22%, rgba(59, 130, 246, 0.38), transparent 45%);
+        }
+
+        body.dark-mode::after {
+            background: radial-gradient(circle at 80% 74%, rgba(244, 114, 182, 0.22), transparent 48%);
+            animation-duration: 36s;
+        }
+
+        @keyframes ambientDrift {
+            0% { transform: translate3d(-2%, -1.5%, 0) scale(1); }
+            50% { transform: translate3d(2%, 1%, 0) scale(1.04); }
+            100% { transform: translate3d(-1%, 2%, 0) scale(1.01); }
+        }
+
+        @keyframes ambientDriftDark {
+            0% { transform: translate3d(-2%, -1.5%, 0) scale(1); }
+            50% { transform: translate3d(2.5%, 1.2%, 0) scale(1.04); }
+            100% { transform: translate3d(-1.2%, 2%, 0) scale(1.02); }
         }
 
         /* Dark Mode */
@@ -46,34 +176,59 @@
             flex-shrink: 0;
         }
 
-        .dark-mode-toggle {
-            position: fixed;
-            bottom: max(1.25rem, env(safe-area-inset-bottom));
-            left: max(1.25rem, env(safe-area-inset-left));
-            z-index: 1000;
-            background: rgba(255, 215, 0, 0.15);
-            border: 2px solid var(--accent-gold);
-            border-radius: 12px;
-            width: 44px;
-            height: 44px;
-            cursor: pointer;
-            transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            display: flex;
+        .hire-now-btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            background: var(--gold-gradient);
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.86rem;
+            letter-spacing: 0.01em;
+            padding: 0.52rem 0.9rem;
+            border-radius: 999px;
+            border: none;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.28);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .hire-now-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(255, 215, 0, 0.35);
+        }
+
+        .nav-theme-trigger {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            padding: 0;
+        }
+
+        .nav-theme-trigger::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-theme-trigger:hover,
+        .nav-theme-trigger.active {
             color: var(--accent-gold);
         }
 
-        .dark-mode-toggle:hover {
-            background: var(--accent-gold);
-            color: var(--primary-blue);
-            transform: none;
-            box-shadow: 0 4px 14px rgba(255, 215, 0, 0.35);
-        }
-
-        .dark-mode-toggle i {
-            font-size: 1.15rem;
+        .nav-theme-trigger:hover::after,
+        .nav-theme-trigger.active::after {
+            width: 100%;
         }
 
         /* Navigation */
@@ -91,6 +246,53 @@
         nav.scrolled {
             background: rgba(10, 17, 40, 0.98);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body:not(.dark-mode) nav {
+            background: rgba(255, 255, 255, 0.56);
+            border-bottom: 1px solid rgba(10, 17, 40, 0.1);
+            backdrop-filter: blur(14px) saturate(140%);
+        }
+
+        body:not(.dark-mode) nav.scrolled {
+            background: rgba(255, 255, 255, 0.68);
+            box-shadow: 0 8px 24px rgba(10, 17, 40, 0.12);
+        }
+
+        body:not(.dark-mode) .service-card,
+        body:not(.dark-mode) .skill-category,
+        body:not(.dark-mode) .project-card,
+        body:not(.dark-mode) .contact-card,
+        body:not(.dark-mode) .quick-recruiter-card {
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(15, 23, 42, 0.11);
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(14px) saturate(140%);
+        }
+
+        body:not(.dark-mode) .project-card-cover,
+        body:not(.dark-mode) .project-card-cover--contain {
+            background: linear-gradient(180deg, rgba(24, 41, 86, 0.9) 0%, rgba(37, 99, 235, 0.78) 100%);
+        }
+
+        body:not(.dark-mode) .nav-links a,
+        body:not(.dark-mode) .nav-theme-trigger {
+            color: #152039;
+        }
+
+        body:not(.dark-mode) .menu-toggle {
+            color: #152039;
+        }
+
+        .dark-mode nav {
+            background: rgba(12, 19, 47, 0.58);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px) saturate(135%);
+        }
+
+        .dark-mode nav.scrolled {
+            background: rgba(12, 19, 47, 0.72);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
 
         .nav-container {
@@ -145,6 +347,225 @@
         .nav-links a:hover::after,
         .nav-links a.active::after {
             width: 100%;
+        }
+
+        .theme-panel-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            background: rgba(10, 17, 40, 0.25);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .theme-panel {
+            position: fixed;
+            top: 82px;
+            right: 24px;
+            z-index: 1201;
+            width: min(320px, calc(100vw - 32px));
+            background: rgba(250, 250, 250, 0.96);
+            border: 1px solid rgba(10, 17, 40, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 20px 45px rgba(10, 17, 40, 0.2);
+            padding: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.98);
+            transition: all 0.24s ease;
+        }
+
+        .theme-panel.open,
+        .theme-panel-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .theme-panel.open {
+            transform: translateY(0) scale(1);
+        }
+
+        .theme-panel h4 {
+            margin: 0 0 0.45rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.96rem;
+            color: #152039;
+        }
+
+        .theme-panel p {
+            margin: 0 0 0.8rem;
+            font-size: 0.82rem;
+            color: #4a4a4a;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .theme-color-options {
+            margin-top: 0.8rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .theme-option-btn {
+            border: 1px solid rgba(10, 17, 40, 0.14);
+            background: white;
+            border-radius: 10px;
+            padding: 0.58rem 0.7rem;
+            font-weight: 600;
+            font-size: 0.86rem;
+            color: #152039;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-option-btn:hover,
+        .theme-option-btn.active {
+            border-color: var(--accent-gold);
+            box-shadow: 0 5px 16px rgba(255, 215, 0, 0.18);
+        }
+
+        .theme-option-btn.full {
+            grid-column: 1 / -1;
+        }
+
+        .theme-color-btn {
+            border: 1px solid rgba(10, 17, 40, 0.14);
+            background: white;
+            border-radius: 10px;
+            padding: 0.45rem 0.6rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #152039;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .theme-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .theme-color-btn:hover,
+        .theme-color-btn.active {
+            border-color: var(--accent-gold);
+            box-shadow: 0 5px 16px rgba(255, 215, 0, 0.18);
+        }
+
+        .dark-mode .theme-panel {
+            background: rgba(21, 32, 57, 0.96);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .dark-mode .theme-panel h4 {
+            color: #FAFAFA;
+        }
+
+        .dark-mode .theme-panel p {
+            color: #d4d4d4;
+        }
+
+        .dark-mode .theme-option-btn {
+            background: #1f2a48;
+            color: #FAFAFA;
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .dark-mode .theme-color-btn {
+            background: #1f2a48;
+            color: #FAFAFA;
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .theme-hint-toast {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 1202;
+            max-width: 290px;
+            background: rgba(250, 250, 250, 0.97);
+            border: 1px solid rgba(10, 17, 40, 0.14);
+            border-radius: 12px;
+            box-shadow: 0 14px 34px rgba(10, 17, 40, 0.2);
+            padding: 0.75rem 0.85rem;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: #152039;
+            transform: translateY(8px);
+            opacity: 0;
+            transition: all 0.25s ease;
+        }
+
+        .theme-hint-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .theme-hint-toast strong {
+            color: var(--accent-gold);
+        }
+
+        .theme-hint-actions {
+            display: flex;
+            gap: 0.45rem;
+            margin-top: 0.55rem;
+        }
+
+        .theme-hint-btn {
+            border: 1px solid rgba(10, 17, 40, 0.14);
+            border-radius: 8px;
+            background: white;
+            color: #152039;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.32rem 0.55rem;
+            cursor: pointer;
+        }
+
+        .theme-hint-btn.primary {
+            border-color: var(--accent-gold);
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        .dark-mode .theme-hint-toast {
+            background: rgba(21, 32, 57, 0.97);
+            border-color: rgba(255, 255, 255, 0.16);
+            color: #FAFAFA;
+        }
+
+        .dark-mode .theme-hint-btn {
+            background: #1f2a48;
+            color: #FAFAFA;
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .dark-mode .theme-hint-btn.primary {
+            color: #152039;
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body:not(.dark-mode)::before,
+            body:not(.dark-mode)::after {
+                animation: none;
+            }
+            body.dark-mode::before,
+            body.dark-mode::after {
+                animation: none;
+            }
         }
 
         /* Hero Section */
@@ -215,6 +636,71 @@
             max-width: 800px;
             padding: 0 2rem;
             position: relative;
+        }
+
+        .proof-strip {
+            margin-top: 1.15rem;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45rem;
+            background: rgba(10, 17, 40, 0.44);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 0.45rem 0.75rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .proof-chip {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.96);
+            padding: 0.22rem 0.48rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .quick-recruiter-info {
+            margin: 2.2rem auto 0;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .quick-recruiter-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(10, 17, 40, 0.08);
+            box-shadow: 0 12px 34px rgba(10, 17, 40, 0.08);
+            padding: 1rem 1.1rem;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.9rem;
+            align-items: stretch;
+        }
+
+        .quick-item h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            margin-bottom: 0.32rem;
+        }
+
+        .quick-item p {
+            margin: 0;
+            font-size: 0.92rem;
+            line-height: 1.45;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .project-impact {
+            margin: -0.1rem 0 0.2rem;
+            font-size: 0.8rem;
+            line-height: 1.45;
+            color: var(--accent-gold);
+            font-weight: 700;
         }
 
         .hero h1 {
@@ -914,7 +1400,10 @@
         }
 
         .dark-mode .project-card {
-            background: #152039;
+            background: rgba(21, 32, 57, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 10px 34px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(14px) saturate(130%);
         }
 
         .dark-mode .project-card-body h3 {
@@ -923,6 +1412,21 @@
 
         .dark-mode .project-card-excerpt {
             color: #c8c8c8;
+        }
+
+        .dark-mode .quick-recruiter-card {
+            background: rgba(21, 32, 57, 0.55);
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(14px) saturate(130%);
+        }
+
+        .dark-mode .quick-item h4 {
+            color: #b8bfd3;
+        }
+
+        .dark-mode .quick-item p {
+            color: #FAFAFA;
         }
 
         /* Contact Section */
@@ -1154,6 +1658,10 @@
     display: block;
   }
 
+  .hire-now-btn {
+    display: none;
+  }
+
   .nav-links {
     display: none;
     flex-direction: column;
@@ -1168,16 +1676,50 @@
     z-index: 999;
   }
 
+  body:not(.dark-mode) .nav-links {
+    background: #ffffff;
+    border: 1px solid rgba(10,17,40,0.08);
+    box-shadow: 0 10px 26px rgba(10,17,40,0.12);
+  }
+
   .nav-links.open {
     display: flex;
   }
 
   .nav-links a {
     color: #FAFAFA;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.25rem 0;
   }
 
   .nav-links a.active {
     color: var(--accent-gold);
+  }
+
+  body:not(.dark-mode) .nav-links a {
+    color: #152039;
+  }
+
+  .nav-links {
+    min-width: 180px;
+    gap: 0.55rem;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .proof-strip {
+    border-radius: 16px;
+    padding: 0.55rem;
+  }
+
+  .quick-recruiter-info {
+    padding: 0 1rem;
+    margin-top: 1.35rem;
+  }
+
+  .quick-recruiter-card {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
   }
 }
 
@@ -1197,17 +1739,37 @@
                     <li><a href="#services">Services</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><button type="button" class="nav-theme-trigger" id="themePanelOpen">Theme</button></li>
                 </ul>
+                <a href="#contact" class="hire-now-btn">Hire Patrick</a>
                 <div class="menu-toggle" id="menuToggle">
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </nav>
-
-    <button type="button" class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
-        <i class="fas fa-moon" id="darkModeIcon"></i>
-    </button>
+    <div id="themePanelBackdrop" class="theme-panel-backdrop" aria-hidden="true"></div>
+    <div id="themePanel" class="theme-panel" aria-hidden="true">
+        <h4>Appearance</h4>
+        <p>Press <strong>T</strong> or <strong>Ctrl+K</strong> anytime.</p>
+        <div class="theme-options">
+            <button type="button" class="theme-option-btn" data-theme-choice="light">Light</button>
+            <button type="button" class="theme-option-btn" data-theme-choice="dark">Dark</button>
+            <button type="button" class="theme-option-btn full" data-theme-choice="toggle">Toggle</button>
+        </div>
+        <h4 style="margin-top:0.9rem;">Color Studio</h4>
+        <p>Choose a signature look for the whole portfolio.</p>
+        <div class="theme-color-options">
+            <button type="button" class="theme-color-btn" data-color-choice="royal"><span class="theme-color-dot" style="background:#2a5298;"></span>Royal</button>
+            <button type="button" class="theme-color-btn" data-color-choice="emerald"><span class="theme-color-dot" style="background:#10b981;"></span>Emerald</button>
+            <button type="button" class="theme-color-btn" data-color-choice="sunset"><span class="theme-color-dot" style="background:#ff6b6b;"></span>Sunset</button>
+            <button type="button" class="theme-color-btn" data-color-choice="violet"><span class="theme-color-dot" style="background:#818cf8;"></span>Violet</button>
+            <button type="button" class="theme-color-btn" data-color-choice="obsidian"><span class="theme-color-dot" style="background:#f59e0b;"></span>Obsidian Gold</button>
+            <button type="button" class="theme-color-btn" data-color-choice="aurora"><span class="theme-color-dot" style="background:#22d3ee;"></span>Aurora Teal</button>
+            <button type="button" class="theme-color-btn" data-color-choice="rose-luxe"><span class="theme-color-dot" style="background:#f472b6;"></span>Rose Luxe</button>
+            <button type="button" class="theme-color-btn" data-color-choice="imperial"><span class="theme-color-dot" style="background:#facc15;"></span>Imperial Gold</button>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
@@ -1226,6 +1788,33 @@
                 <a href="Benchog Patrick_CV.pdf" class="glass-button slide-in-up" target="_blank" rel="noopener">Download CV</a>
             </div>
 
+            <div class="proof-strip">
+                <span class="proof-chip">Real APK + PWA products</span>
+                <span class="proof-chip">Live deployed projects</span>
+                <span class="proof-chip">Business-impact solutions</span>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="quick-recruiter-info fade-in">
+        <div class="quick-recruiter-card">
+            <div class="quick-item">
+                <h4>Role Fit</h4>
+                <p>Flutter/Android builder + web product developer with AI-accelerated delivery.</p>
+            </div>
+            <div class="quick-item">
+                <h4>Location</h4>
+                <p>Techiman, Ghana — remote-friendly and collaboration-ready.</p>
+            </div>
+            <div class="quick-item">
+                <h4>Core Strength</h4>
+                <p>Turning real operational pain points into shipped products fast.</p>
+            </div>
+            <div class="quick-item">
+                <h4>Direct Contact</h4>
+                <p>pat.benchog@gmail.com · +233240025563</p>
+            </div>
         </div>
     </section>
 
@@ -1239,7 +1828,7 @@
                 </div>
             </div>
             <div class="about-text">
-                <p>I am <strong>Patrick Benchog</strong> — a young entrepreneur, AI-powered builder, and problem solver based in Kumasi, Ghana. My tagline says it best: <em>Built out of curiosity.</em> I don't wait for someone to hand me a spec. I see a problem, and I build the solution.</p>
+                <p>I am <strong>Patrick Benchog</strong> — a young entrepreneur, AI-powered builder, and problem solver based in Techiman, Ghana. My tagline says it best: <em>Built out of curiosity.</em> I don't wait for someone to hand me a spec. I see a problem, and I build the solution.</p>
 
                 <p>I've built fully functional, production-ready apps and websites — real tools used by real people, not demos sitting in a folder. From a personal finance manager that gives complete clarity over your money, to a stock tracking system that eliminated weekly manual counting at my workplace, to a fee tool for non-citizens in Ghana that stops clients from travelling far only to arrive unprepared — every product I've built was born from a genuine pain point.</p>
 
@@ -1388,6 +1977,7 @@
                 <div class="project-card-body">
                     <h3>The Optimist</h3>
                     <p class="project-card-excerpt">Turn financial confusion into total clarity.</p>
+                    <p class="project-impact">Impact: helps users move from money stress to structured financial control.</p>
                     <ul class="project-card-highlights">
                         <li>Complete personal finance management system</li>
                         <li>Real-time budgeting and smart alerts</li>
@@ -1414,6 +2004,7 @@
                 <div class="project-card-body">
                     <h3>StockPulse</h3>
                     <p class="project-card-excerpt">Stop counting stock every week — automate it.</p>
+                    <p class="project-impact">Impact: cuts manual stock workload and improves inventory accuracy.</p>
                     <ul class="project-card-highlights">
                         <li>Automated inventory tracking system</li>
                         <li>Daily usage logging with real-time updates</li>
@@ -1440,6 +2031,7 @@
                 <div class="project-card-body">
                     <h3>IMS Fee App</h3>
                     <p class="project-card-excerpt">Know exactly what to pay before you arrive.</p>
+                    <p class="project-impact">Impact: reduces wasted trips and uncertainty for non-citizen clients.</p>
                     <ul class="project-card-highlights">
                         <li>Real-time fee calculation system</li>
                         <li>Weekly dollar rate updates</li>
@@ -1466,6 +2058,7 @@
                 <div class="project-card-body">
                     <h3>Furniture Sales Dashboard</h3>
                     <p class="project-card-excerpt">Uncovering hidden profit leaks in sales performance.</p>
+                    <p class="project-impact">Impact: highlights margin leakage despite strong topline revenue.</p>
                     <ul class="project-card-highlights">
                         <li>$741K+ sales data analyzed</li>
                         <li>Identified low profit margins</li>
@@ -1490,6 +2083,7 @@
                 <div class="project-card-body">
                     <h3>Marketing Campaign Dashboard</h3>
                     <p class="project-card-excerpt">Massive reach means nothing without conversion.</p>
+                    <p class="project-impact">Impact: pinpoints where campaign spend loses value and where ROI wins.</p>
                     <ul class="project-card-highlights">
                         <li>1.1B impressions analyzed</li>
                         <li>Conversion funnel breakdown</li>
@@ -1509,11 +2103,17 @@
             <!-- PrimeDraft Website -->
             <div class="project-card" data-category="web">
                 <div class="project-card-cover">
-                    <img src="Primed.png" alt="PrimeDraft Services — site preview">
+                    <img src="PrimeDraft-Home.png" alt="PrimeDraft Services — site preview" class="img-fallback-chain" data-fallback-srcs="Primed.png">
                 </div>
                 <div class="project-card-body">
                     <h3>PrimeDraft Services</h3>
                     <p class="project-card-excerpt">Business site for document editing &amp; proofreading: services, testimonials, and quote flow — deployed and live on Vercel.</p>
+                    <p class="project-impact">Impact: sharper brand credibility and lead-ready service presentation.</p>
+                    <ul class="project-card-highlights">
+                        <li>Service clarity and offer positioning</li>
+                        <li>Trust-building reviews and proof points</li>
+                        <li>Conversion-focused contact flow</li>
+                    </ul>
                     <div class="project-tags">
                         <span class="tag">Website</span>
                         <span class="tag">Business</span>
@@ -1529,11 +2129,17 @@
             <!-- BenchTech Support Website -->
             <div class="project-card" data-category="web">
                 <div class="project-card-cover">
-                    <img src="BenchTech.png" alt="BenchTech Support — site preview">
+                    <img src="BenchTech-Dashboard.png" alt="BenchTech Support — site preview" class="img-fallback-chain" data-fallback-srcs="BenchTech.png">
                 </div>
                 <div class="project-card-body">
                     <h3>BenchTech Support</h3>
                     <p class="project-card-excerpt">IT support brand site: Windows &amp; Office setup, antivirus, software fixes, and emergency help — live on GitHub Pages.</p>
+                    <p class="project-impact">Impact: converts technical services into a clear trust-first customer journey.</p>
+                    <ul class="project-card-highlights">
+                        <li>Clear service catalog for quick trust</li>
+                        <li>Simple route to request immediate help</li>
+                        <li>Professional presentation for IT credibility</li>
+                    </ul>
                     <div class="project-tags">
                         <span class="tag">Website</span>
                         <span class="tag">IT Services</span>
@@ -1591,6 +2197,7 @@
         <div class="footer-mantra">
             "Built with optimism. Powered by innovation. Driven to leave a mark on this world."
         </div>
+        <p style="margin-bottom:0.45rem;">Recruiting? <a href="mailto:pat.benchog@gmail.com" style="color:var(--accent-gold);font-weight:700;text-decoration:none;">Hire Patrick now</a> — response is fast.</p>
         <p>&copy; 2026 Patrick Benchog - Optimistic. All rights reserved.</p>
     </footer>
 
@@ -1629,27 +2236,97 @@
             }, 3000);
         }
 
+        function setTheme(mode) {
+            const isDark = mode === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            document.querySelectorAll('.theme-option-btn[data-theme-choice]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`.theme-option-btn[data-theme-choice="${isDark ? 'dark' : 'light'}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        function setColorScheme(scheme) {
+            const valid = ['royal', 'emerald', 'sunset', 'violet', 'obsidian', 'aurora', 'rose-luxe', 'imperial'];
+            const next = valid.includes(scheme) ? scheme : 'royal';
+            document.body.setAttribute('data-color-scheme', next);
+            localStorage.setItem('colorScheme', next);
+            document.querySelectorAll('.theme-color-btn[data-color-choice]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-color-choice') === next);
+            });
+        }
+
         // Dark mode toggle
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.getElementById('darkModeIcon');
-            
-            if (document.body.classList.contains('dark-mode')) {
-                icon.className = 'fas fa-sun';
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                icon.className = 'fas fa-moon';
-                localStorage.setItem('darkMode', 'disabled');
-            }
+            setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
         }
 
         // Load dark mode preference
         function loadDarkMode() {
             const darkMode = localStorage.getItem('darkMode');
-            if (darkMode === 'enabled') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('darkModeIcon').className = 'fas fa-sun';
-            }
+            setTheme(darkMode === 'enabled' ? 'dark' : 'light');
+        }
+
+        function loadColorScheme() {
+            const saved = localStorage.getItem('colorScheme') || 'royal';
+            setColorScheme(saved);
+        }
+
+        function openThemePanel() {
+            const panel = document.getElementById('themePanel');
+            const backdrop = document.getElementById('themePanelBackdrop');
+            if (!panel || !backdrop) return;
+            panel.classList.add('open');
+            panel.setAttribute('aria-hidden', 'false');
+            backdrop.classList.add('open');
+            backdrop.setAttribute('aria-hidden', 'false');
+            const trigger = document.getElementById('themePanelOpen');
+            if (trigger) trigger.classList.add('active');
+            const firstBtn = panel.querySelector('.theme-option-btn');
+            if (firstBtn) firstBtn.focus();
+        }
+
+        function closeThemePanel() {
+            const panel = document.getElementById('themePanel');
+            const backdrop = document.getElementById('themePanelBackdrop');
+            if (!panel || !backdrop) return;
+            panel.classList.remove('open');
+            panel.setAttribute('aria-hidden', 'true');
+            backdrop.classList.remove('open');
+            backdrop.setAttribute('aria-hidden', 'true');
+            const trigger = document.getElementById('themePanelOpen');
+            if (trigger) trigger.classList.remove('active');
+        }
+
+        function showThemeHintOnce() {
+            if (localStorage.getItem('themeHintSeen') === '1') return;
+            const toast = document.createElement('div');
+            toast.className = 'theme-hint-toast';
+            toast.innerHTML = `
+                <div><strong>Tip:</strong> press <strong>T</strong> (or <strong>Ctrl+K</strong>) to open theme controls.</div>
+                <div class="theme-hint-actions">
+                    <button type="button" class="theme-hint-btn primary" id="themeHintOpen">Open Theme</button>
+                    <button type="button" class="theme-hint-btn" id="themeHintDismiss">Got it</button>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
+
+            const close = () => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 220);
+                localStorage.setItem('themeHintSeen', '1');
+            };
+
+            toast.querySelector('#themeHintOpen').addEventListener('click', () => {
+                close();
+                openThemePanel();
+            });
+            toast.querySelector('#themeHintDismiss').addEventListener('click', close);
+            setTimeout(() => {
+                if (document.body.contains(toast)) close();
+            }, 8500);
         }
 
         // Navbar scroll effect
@@ -1874,36 +2551,51 @@
             });
         }
         
-        // Working sendMessage function
+        const recruiterFaq = [
+            { keywords: ['location', 'based', 'where'], answer: 'Patrick is based in Techiman, Ghana.' },
+            { keywords: ['contact', 'email', 'whatsapp', 'reach', 'hire', 'interview'], answer: 'You can reach Patrick directly via email: pat.benchog@gmail.com, WhatsApp: https://wa.me/233240025563, LinkedIn: https://www.linkedin.com/in/patrick-benchog.' },
+            { keywords: ['tech stack', 'stack', 'tools', 'technology', 'technologies'], answer: 'Core stack: Flutter + Android Studio for real APK builds, web development tools, Supabase/Firebase backends, Excel dashboards, and AI-assisted development with Cursor + Claude.' },
+            { keywords: ['apk', 'android app', 'play store', 'native app'], answer: 'Beyond PWAs, Patrick built real Android APKs for The Optimist, StockPulse, and IMS Fee App using Flutter + Android Studio.' },
+            { keywords: ['experience', 'role', 'responsibility', 'worked on'], answer: 'Patrick designs system architecture, translates real-world problems into product workflows, guides AI tools during implementation, and handles testing and product improvements.' },
+            { keywords: ['project', 'portfolio', 'built'], answer: 'Key projects include The Optimist, StockPulse, IMS Fee App, Furniture Sales Dashboard, Marketing Campaign Dashboard, PrimeDraft Services, and BenchTech Support.' },
+            { keywords: ['optimist', 'finance'], answer: 'The Optimist is a personal finance intelligence system with budgeting alerts, debt/savings tracking, reports, AI coach support, and cross-device sync.' },
+            { keywords: ['stockpulse', 'inventory', 'stock'], answer: 'StockPulse automates inventory with one-time stock capture, daily logs, automated calculations, and PDF/WhatsApp reporting.' },
+            { keywords: ['ims', 'fee', 'non-citizen', 'ghana card'], answer: 'IMS Fee App helps non-citizens in Ghana know exact fees and requirements before visiting. Weekly rates are updated by admin and fees recalculate automatically.' },
+            { keywords: ['furniture', 'sales dashboard', 'excel'], answer: 'The Furniture Sales Dashboard analyzes $741K+ sales data, exposes profit leaks, and highlights logistics/pricing inefficiencies.' },
+            { keywords: ['marketing', 'campaign', 'roi', 'conversion'], answer: 'The Marketing Campaign Dashboard evaluates impressions, clicks, funnel conversion, acquisition cost, and ROI to identify performance gaps.' },
+            { keywords: ['strength', 'strengths', 'why hire', 'fit'], answer: 'Patrick’s strengths include practical problem-solving, fast product execution, real-world deployment focus, and effective AI-assisted building.' },
+            { keywords: ['service', 'services', 'offer'], answer: 'Services include app development, website development, analytics dashboards, CAD/CAM engineering, graphics/photo editing, IT support, and document editing.' }
+        ];
+
+        function getRecruiterReply(input) {
+            const msg = input.toLowerCase();
+            let best = { score: 0, answer: '' };
+
+            recruiterFaq.forEach(item => {
+                let score = 0;
+                item.keywords.forEach(kw => {
+                    if (msg.includes(kw)) score += kw.includes(' ') ? 2 : 1;
+                });
+                if (score > best.score) best = { score, answer: item.answer };
+            });
+
+            if (best.score > 0) return best.answer;
+            if (msg.includes('hi') || msg.includes('hello') || msg.includes('hey')) return "Hello! I'm Optimistic, Patrick Benchog's portfolio assistant. Ask me about projects, stack, hiring fit, or contact details.";
+            if (msg.includes('thank')) return "You're welcome. If you need a recruiter-focused summary, ask about strengths, projects, impact, or tech stack.";
+            if (msg.includes('bye') || msg.includes('goodbye')) return "Thanks for visiting Patrick's portfolio. Have a great day.";
+            return "I may not have that exact detail yet, but I can help with project summaries, stack, strengths, services, and contact info. For direct queries, email pat.benchog@gmail.com.";
+        }
+
+        // Recruiter-focused chatbot reply function
         function sendMessage() {
             const inputField = document.getElementById('chatInput');
             const input = inputField.value.trim();
             if (input === "") return;
-            
+
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML += `<div style="margin: 5px 0;">You: ${input}</div>`;
-            
-            let reply = "Sorry boss, I didn't get that.";
-            const msg = input.toLowerCase();
-            
-            if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey")) {
-                reply = "Hello boss! I'm Optimistic, Benchog Patrick's AI assistant. Ask me anything about his work, skills, or projects!";
-            } else if (msg.includes("who are you") || msg.includes("benchog") || msg.includes("patrick") || msg.includes("about you")) {
-                reply = "I'm Optimistic, an AI chatbot built into Patrick's portfolio. Patrick is a visionary mechanical engineer, AI innovator, and creative leader from Ghana.";
-            } else if (msg.includes("skills") || msg.includes("what can you do") || msg.includes("abilities")) {
-                reply = "Patrick's skills include App Development (PWA & Android), AI-powered building, Web Development, Data Analytics, CAD/CAM (Solid Edge & AutoCAD), Graphics Design, IT Support, and Document Editing.";
-            } else if (msg.includes("projects") || msg.includes("what have you built") || msg.includes("portfolio")) {
-                reply = "Patrick has built several real apps and websites: The Optimist (personal finance), StockPulse (inventory automation), IMS Fee App (fees for non-citizens in Ghana), plus Excel dashboards (furniture sales & marketing campaigns), PrimeDraft and BenchTech websites. All live and deployed!";
-            } else if (msg.includes("services") || msg.includes("what do you offer") || msg.includes("what services")) {
-                reply = "Patrick offers: App Development, Website Development, Data Analytics & Dashboards, CAD/CAM Engineering, Graphics & Photo Editing, IT Support & Computer Services, and Document & Thesis Editing.";
-            } else if (msg.includes("contact") || msg.includes("how do i reach you") || msg.includes("email") || msg.includes("whatsapp")) {
-                reply = "You can reach Patrick via the contact section below, on WhatsApp: https://wa.me/233240025563, or email: pat.benchog@gmail.com.";
-            } else if (msg.includes("thank")) {
-                reply = "You're always welcome boss! 🚀 Let me know if you need anything else.";
-            } else if (msg.includes("bye") || msg.includes("goodbye")) {
-                reply = "Goodbye boss! Stay optimistic and keep creating!";
-            }
-            
+
+            const reply = getRecruiterReply(input);
             chatMessages.innerHTML += `<div style="color: var(--accent-gold); margin: 5px 0;">Bot: ${reply}</div>`;
             inputField.value = "";
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -1963,7 +2655,7 @@
                 subtitle: 'Personal Finance Intelligence System',
                 liveUrl: 'https://theoptimist.pages.dev/',
                 liveLabel: 'Open live app ↗',
-                tags: ['PWA', 'Flutter', 'Supabase', 'AI-assisted'],
+                tags: ['PWA + APK', 'Flutter', 'Android Studio', 'Supabase'],
                 detailSections: [
                     { title: 'Summary', body: 'A full-featured personal finance system designed to help users track, manage, and grow their money with complete clarity and control.' },
                     { title: 'The Problem', body: 'Many people struggle with managing their finances, not because they don\'t earn enough, but because they lack visibility into where their money goes. This leads to overspending, poor savings habits, and financial stress.' },
@@ -1979,7 +2671,7 @@
                         'Cross-device data synchronization'
                     ]},
                     { title: 'Impact', body: 'This system transforms financial confusion into structured, trackable insights, helping users make better financial decisions and stay in control of their money.' },
-                    { title: 'Tech Stack', body: 'Flutter / Android Studio · Supabase / Firebase · AI-assisted development (Cursor, Claude)' },
+                    { title: 'Tech Stack', body: 'Flutter / Android Studio (PWA + real APK build) · Supabase / Firebase · AI-assisted development (Cursor, Claude)' },
                     { title: 'My Role', body: 'Designed the system structure, guided AI tools in development, implemented core features, and handled testing and improvements.' },
                     { title: 'What I Learned', body: 'Improved my ability to design complex systems, manage multiple financial features, and effectively use AI tools to accelerate development.' }
                 ],
@@ -1997,7 +2689,7 @@
                 subtitle: 'Intelligent Inventory Tracker',
                 liveUrl: 'https://stockpulse-pb.pages.dev/',
                 liveLabel: 'Open live app ↗',
-                tags: ['PWA', 'Flutter', 'Automation', 'Reports'],
+                tags: ['PWA + APK', 'Flutter', 'Android Studio', 'Automation'],
                 detailSections: [
                     { title: 'Summary', body: 'A smart inventory management system built to eliminate repetitive manual stock counting and streamline reporting.' },
                     { title: 'The Problem', body: 'Manual stock counting is time-consuming, stressful, and prone to human error, especially when dealing with large quantities of items weekly.' },
@@ -2011,7 +2703,7 @@
                         'PDF report generation'
                     ]},
                     { title: 'Impact', body: 'Reduces hours of manual work, improves accuracy, and simplifies the entire stock management process.' },
-                    { title: 'Tech Stack', body: 'Android Studio / Flutter · Backend integration · AI-assisted development (Cursor, Claude)' },
+                    { title: 'Tech Stack', body: 'Android Studio / Flutter (PWA + real APK build) · Backend integration · AI-assisted development (Cursor, Claude)' },
                     { title: 'My Role', body: 'Designed the workflow, built the system using AI tools, and implemented automation for stock tracking and reporting.' },
                     { title: 'What I Learned', body: 'Learned how to design efficient tracking systems and automate repetitive real-world tasks.' }
                 ],
@@ -2031,7 +2723,7 @@
                 subtitle: 'Smart Client Payment System',
                 liveUrl: 'https://nia-fees.pages.dev/',
                 liveLabel: 'Open live app ↗',
-                tags: ['PWA', 'Flutter', 'Non-citizens Ghana', 'Live fees'],
+                tags: ['PWA + APK', 'Flutter', 'Android Studio', 'Non-citizens Ghana'],
                 detailSections: [
                     { title: 'Summary', body: 'A dynamic fee management system that helps clients know exactly what to pay before visiting the office.' },
                     { title: 'The Problem', body: 'Clients often travel long distances without knowing the exact fees or requirements, leading to wasted time, money, and frustration.' },
@@ -2043,7 +2735,7 @@
                         'Simple and user-friendly interface'
                     ]},
                     { title: 'Impact', body: 'Eliminates confusion, reduces unnecessary travel, and improves overall client experience and operational efficiency.' },
-                    { title: 'Tech Stack', body: 'Android Studio / Flutter · Backend logic integration · AI-assisted development (Cursor, Claude)' },
+                    { title: 'Tech Stack', body: 'Android Studio / Flutter (PWA + real APK build) · Backend logic integration · AI-assisted development (Cursor, Claude)' },
                     { title: 'My Role', body: 'Identified the problem, designed the solution, and built the system using AI-assisted tools.' },
                     { title: 'What I Learned', body: 'Improved my ability to build solutions that directly impact real users and solve operational challenges.' }
                 ],
@@ -2131,7 +2823,11 @@
                 liveLabel: 'Visit live site ↗',
                 tags: ['Website', 'Business', 'Deployed'],
                 gallery: [
-                    { file: 'Primed.png', caption: 'Homepage & key sections' }
+                    { file: 'PrimeDraft-Home.png', caption: 'Homepage', fallback: 'Primed.png' },
+                    { file: 'PrimeDraft-Services.png', caption: 'Services section' },
+                    { file: 'PrimeDraft-Process.png', caption: 'Work process / workflow' },
+                    { file: 'PrimeDraft-Reviews.png', caption: 'Client reviews' },
+                    { file: 'PrimeDraft-Contact.png', caption: 'Contact section' }
                 ]
             },
             benchtech: {
@@ -2143,7 +2839,11 @@
                 liveLabel: 'Visit live site ↗',
                 tags: ['Website', 'IT Services', 'Deployed'],
                 gallery: [
-                    { file: 'BenchTech.png', caption: 'Site preview' }
+                    { file: 'BenchTech-Dashboard.png', caption: 'Homepage / dashboard', fallback: 'BenchTech.png' },
+                    { file: 'BenchTech-Services.png', caption: 'Services section' },
+                    { file: 'BenchTech-About.png', caption: 'About section' },
+                    { file: 'BenchTech-Contact.png', caption: 'Contact section' },
+                    { file: 'BenchTech-Book Service.png', caption: 'Book service flow' }
                 ]
             }
         };
@@ -2328,6 +3028,32 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             createParticles();
             animateRotatingText();
             loadDarkMode();
+            loadColorScheme();
+            document.getElementById('themePanelOpen').addEventListener('click', function () {
+                const panel = document.getElementById('themePanel');
+                if (panel && panel.classList.contains('open')) {
+                    closeThemePanel();
+                } else {
+                    openThemePanel();
+                }
+            });
+            document.getElementById('themePanelBackdrop').addEventListener('click', closeThemePanel);
+            document.querySelectorAll('.theme-option-btn[data-theme-choice]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const choice = btn.getAttribute('data-theme-choice');
+                    if (choice === 'toggle') {
+                        toggleDarkMode();
+                    } else {
+                        setTheme(choice);
+                    }
+                    closeThemePanel();
+                });
+            });
+            document.querySelectorAll('.theme-color-btn[data-color-choice]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    setColorScheme(btn.getAttribute('data-color-choice'));
+                });
+            });
             initSmoothScrolling();
             initScrollAnimations();
             initProjectFiltering();
@@ -2337,6 +3063,7 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             initTypingEffect();
             initVoiceGreeting();
             initChatbot();
+            showThemeHintOnce();
             //initCursorTrail();
             initParallaxScrolling();
 
@@ -2346,8 +3073,17 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             // Add keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
+                    closeThemePanel();
                     closeProjectModal();
                     document.querySelectorAll('.greeting, .modal').forEach(el => el.remove());
+                }
+                const activeTag = document.activeElement && document.activeElement.tagName;
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+                if (e.key.toLowerCase() === 't' || (e.ctrlKey && e.key.toLowerCase() === 'k')) {
+                    e.preventDefault();
+                    const panel = document.getElementById('themePanel');
+                    if (panel && panel.classList.contains('open')) closeThemePanel();
+                    else openThemePanel();
                 }
             });
         });
