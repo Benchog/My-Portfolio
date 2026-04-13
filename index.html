@@ -39,39 +39,42 @@
             --primary-blue: #152039;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-shrink: 0;
+        }
+
         .dark-mode-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: rgba(255, 215, 0, 0.2);
-    border: 2px solid var(--accent-gold);
-    border-radius: 10px;
-    width: 120px;
-    height: 45px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-gold);
-    font-weight: bold;
-    font-size: 1rem;
-}
+            position: fixed;
+            bottom: max(1.25rem, env(safe-area-inset-bottom));
+            left: max(1.25rem, env(safe-area-inset-left));
+            z-index: 1000;
+            background: rgba(255, 215, 0, 0.15);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+        }
 
-.dark-mode-toggle:hover {
-    transform: scale(1.05);
-    background: rgba(255, 215, 0, 0.3);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-}
+        .dark-mode-toggle:hover {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            transform: none;
+            box-shadow: 0 4px 14px rgba(255, 215, 0, 0.35);
+        }
 
-        /* Fix dark mode headings in Proof of Impact section */
-body.dark-mode .project-card h3 {
-    color: var(--accent-gold) !important;
-}
-
+        .dark-mode-toggle i {
+            font-size: 1.15rem;
+        }
 
         /* Navigation */
         nav {
@@ -124,6 +127,10 @@ body.dark-mode .project-card h3 {
             color: var(--accent-gold);
         }
 
+        .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -135,7 +142,8 @@ body.dark-mode .project-card h3 {
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
@@ -148,6 +156,34 @@ body.dark-mode .project-card h3 {
             justify-content: center;
             position: relative;
             overflow: hidden;
+            isolation: isolate;
+        }
+
+        .hero-portrait-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: url('1750806398142.jpeg');
+            background-size: cover;
+            background-position: center 22%;
+            background-repeat: no-repeat;
+            opacity: 0.14;
+            filter: saturate(0.9) blur(0.6px);
+            transform: scale(1.08);
+            pointer-events: none;
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(
+                ellipse 95% 90% at 50% 42%,
+                rgba(10, 17, 40, 0.15) 0%,
+                rgba(10, 17, 40, 0.55) 55%,
+                rgba(10, 17, 40, 0.82) 100%
+            );
         }
 
         .particles {
@@ -157,6 +193,7 @@ body.dark-mode .project-card h3 {
             width: 100%;
             height: 100%;
             overflow: hidden;
+            z-index: 2;
         }
 
         .particle {
@@ -174,9 +211,10 @@ body.dark-mode .project-card h3 {
         .hero-content {
             text-align: center;
             color: white;
-            z-index: 2;
+            z-index: 3;
             max-width: 800px;
             padding: 0 2rem;
+            position: relative;
         }
 
         .hero h1 {
@@ -451,7 +489,7 @@ body.dark-mode .project-card h3 {
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
             gap: 2rem;
         }
 
@@ -460,12 +498,126 @@ body.dark-mode .project-card h3 {
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-6px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card-cover {
+            position: relative;
+            height: 200px;
+            flex-shrink: 0;
+            background: var(--gradient-bg);
+            overflow: hidden;
+        }
+
+        .project-card-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        /* Wide Excel / dashboard screenshots — show full frame inside cover */
+        .project-card-cover--contain {
+            background: linear-gradient(180deg, #1a2847 0%, #0f1833 100%);
+        }
+
+        .project-card-cover--contain img {
+            object-fit: contain;
+            object-position: center;
+            padding: 0.35rem;
+        }
+
+        .project-card-cover--icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-card-body {
+            padding: 1.35rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            gap: 0.75rem;
+        }
+
+        .project-card-body h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.35rem;
+            margin: 0;
+            color: var(--primary-blue);
+            line-height: 1.25;
+        }
+
+        .project-card-excerpt {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: var(--text-light);
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .project-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 0.25rem;
+        }
+
+        .btn-view-project {
+            background: var(--gold-gradient);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.55rem 1.15rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-view-project:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.35);
+        }
+
+        .btn-project-live {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-project-live:hover {
+            background: var(--primary-blue);
+            color: white;
         }
 
         .project-image {
@@ -491,8 +643,9 @@ body.dark-mode .project-card h3 {
 
         .project-tags {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
-            margin-top: 1rem;
+            margin-top: 0.25rem;
         }
 
         .tag {
@@ -502,6 +655,274 @@ body.dark-mode .project-card h3 {
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 500;
+        }
+
+        /* Project detail modal */
+        .project-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 1.5rem;
+            padding-top: max(1.5rem, env(safe-area-inset-top));
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .project-modal.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .project-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: rgba(10, 17, 40, 0.72);
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+        }
+
+        .project-modal-panel {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 920px;
+            max-height: min(92vh, 900px);
+            margin-top: 0;
+            background: var(--soft-white);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(16px);
+            transition: transform 0.3s ease;
+        }
+
+        .project-modal.is-open .project-modal-panel {
+            transform: translateY(0);
+        }
+
+        .project-modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(10, 17, 40, 0.08);
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .project-modal-close:hover {
+            background: rgba(10, 17, 40, 0.15);
+        }
+
+        .project-modal-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 2.25rem 2rem 2rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .project-modal-gallery-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
+            margin: 2rem 0 0.75rem;
+            color: var(--primary-blue);
+        }
+
+        .dark-mode .project-modal-gallery-heading {
+            color: #FAFAFA;
+        }
+
+        .project-modal-scroll h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.75rem;
+            margin: 0 0 0.85rem;
+            color: var(--primary-blue);
+            padding-right: 2.5rem;
+            line-height: 1.2;
+        }
+
+        .project-modal-scroll .project-tags {
+            margin-top: 0;
+            margin-bottom: 1.1rem;
+        }
+
+        .project-modal-scroll .project-modal-lead {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-dark);
+            margin: 0 0 1rem;
+        }
+
+        .project-modal-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin: 0 0 1.5rem;
+            line-height: 1.45;
+            padding-top: 0.25rem;
+            clear: both;
+        }
+
+        .project-modal-section {
+            margin-bottom: 1.35rem;
+        }
+
+        .project-modal-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 0 0 0.65rem;
+        }
+
+        .project-modal-list {
+            margin: 0 0 0.25rem;
+            padding-left: 1.25rem;
+            color: var(--text-dark);
+            font-size: 1.02rem;
+            line-height: 1.65;
+        }
+
+        .project-modal-list li {
+            margin-bottom: 0.35rem;
+        }
+
+        .project-card-highlights {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.5rem;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-light);
+        }
+
+        .project-card-highlights li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-card-highlights li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+        }
+
+        .dark-mode .project-card-highlights {
+            color: #b8c0d4;
+        }
+
+        .project-modal-scroll .project-modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-modal-scroll .project-modal-gallery figure {
+            margin: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            background: #e8ecf4;
+        }
+
+        .project-modal-scroll .project-modal-gallery img {
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+            display: block;
+        }
+
+        .project-modal-scroll .project-modal-gallery figcaption {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            background: white;
+        }
+
+        .project-modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .dark-mode .project-modal-panel {
+            background: #152039;
+        }
+
+        .dark-mode .project-modal-scroll h2,
+        .dark-mode .project-modal-scroll .project-modal-lead {
+            color: #FAFAFA;
+        }
+
+        .dark-mode .project-modal-section-title {
+            color: #FAFAFA;
+        }
+
+        .dark-mode .project-modal-list {
+            color: #e8e8e8;
+        }
+
+        .dark-mode .project-modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FAFAFA;
+        }
+
+        .dark-mode .project-modal-scroll .project-modal-gallery figcaption {
+            background: #1f2a48;
+            color: #ccc;
+        }
+
+        .dark-mode .btn-project-live {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .dark-mode .btn-project-live:hover {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+        }
+
+        .dark-mode .project-card {
+            background: #152039;
+        }
+
+        .dark-mode .project-card-body h3 {
+            color: #FAFAFA;
+        }
+
+        .dark-mode .project-card-excerpt {
+            color: #c8c8c8;
         }
 
         /* Contact Section */
@@ -516,12 +937,11 @@ body.dark-mode .project-card h3 {
             padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
+            transition: box-shadow 0.3s ease;
         }
 
         .contact-card:hover {
-            transform: rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.14);
         }
 
         .social-links {
@@ -532,6 +952,8 @@ body.dark-mode .project-card h3 {
         }
 
         .social-link {
+            position: relative;
+            z-index: 1;
             width: 60px;
             height: 60px;
             background: var(--gradient-bg);
@@ -542,13 +964,13 @@ body.dark-mode .project-card h3 {
             justify-content: center;
             text-decoration: none;
             font-size: 1.5rem;
-            transition: all 0.3s ease;
+            transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .social-link:hover {
             background: var(--gold-gradient);
             color: var(--primary-blue);
-            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.35);
         }
 
         /* Footer */
@@ -753,54 +1175,50 @@ body.dark-mode .project-card h3 {
   .nav-links a {
     color: #FAFAFA;
   }
-}
 
-    @media (max-width: 768px) {
-    .dark-mode-toggle {
-        bottom: 20px;
-        left: 20px;
-        top: auto;
-        right: auto;
-    }
+  .nav-links a.active {
+    color: var(--accent-gold);
+  }
 }
-
 
     </style>
 </head>
 <body>
 
-    <!-- Dark Mode Toggle -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-    <i class="fas fa-moon" id="darkModeIcon" style="margin-right:8px;"></i> Mode
-</button>
-
-
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">PB</a>
-            <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
     </nav>
 
+    <button type="button" class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+        <i class="fas fa-moon" id="darkModeIcon"></i>
+    </button>
+
     <!-- Hero Section -->
     <section id="hero" class="hero">
+        <div class="hero-portrait-bg" aria-hidden="true"></div>
+        <div class="hero-vignette" aria-hidden="true"></div>
         <div class="particles" id="particles"></div>
         <div class="hero-content">
             <h1>Patrick Benchog</h1>
-            <p class="tagline">Building Tech Solutions That Inspire, Impact, and Last Forever.</p>
+            <p class="tagline">I Build Real Apps That Solve Real Problems — With AI, Speed, and Purpose.</p>
             <p class="caption">
-                <span class="rotating-text" id="rotatingText">Engineer</span> • Innovator • Dream Chaser • Future World-Changer
+                <span class="rotating-text" id="rotatingText">App Builder</span> • Innovator • Problem Solver • Built Out of Curiosity
             </p>
             
             <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
@@ -817,17 +1235,20 @@ body.dark-mode .project-card h3 {
         <div class="about-content">
             <div class="about-image">
                 <div class="about-image">
-                    <img src="1750806398142.jpg" alt="Benchog Patrick">
+                    <img src="1750806398142.jpeg" alt="Benchog Patrick">
                 </div>
             </div>
             <div class="about-text">
-                <p>I am <strong>Patrick Benchog,</strong> a passionate and optimistic Mechanical Engineer and emerging AI and Web Development specialist from Ghana. My work is rooted in the belief that technology and innovation should serve communities and create lasting, meaningful change. Over the years, I’ve combined engineering principles with digital technologies to build impactful solutions — from community water treatment systems to AI-driven healthcare tools and intelligent voice assistants.</p>
-                
-                <p>I am driven by curiosity, a commitment to continuous learning, and a relentless desire to challenge conventional limitations. Beyond my technical abilities, I take pride in my leadership, problem-solving mindset, and my ability to turn abstract ideas into practical, scalable projects. Every initiative I lead is grounded in purpose: to uplift people, optimize systems, and leave a positive, measurable impact.</p>
-                <p>My career mission is simple — to inspire, innovate, and engineer a future where no idea is too ambitious and no problem is too complex to solve. I welcome opportunities to collaborate with forward-thinking teams and organizations who share this vision.</p>
+                <p>I am <strong>Patrick Benchog</strong> — a young entrepreneur, AI-powered builder, and problem solver based in Kumasi, Ghana. My tagline says it best: <em>Built out of curiosity.</em> I don't wait for someone to hand me a spec. I see a problem, and I build the solution.</p>
+
+                <p>I've built fully functional, production-ready apps and websites — real tools used by real people, not demos sitting in a folder. From a personal finance manager that gives complete clarity over your money, to a stock tracking system that eliminated weekly manual counting at my workplace, to a fee tool for non-citizens in Ghana that stops clients from travelling far only to arrive unprepared — every product I've built was born from a genuine pain point.</p>
+
+                <p>I work with AI as a force multiplier — taking ideas from concept to deployed product with speed and precision. I build web apps, Android PWAs, data dashboards, and business websites. I also bring CAD/CAM engineering skills (Solid Edge & AutoCAD), graphic design, and IT support to the table — making me one of the most versatile builders you'll find.</p>
+
+                <p>I'm not just adding tools to a resume. I'm building a body of work that speaks for itself. And I'm just getting started.</p>
 
                 <div class="mantra-box">
-                    Nothing is impossible if you stay optimistic, committed, and crazy enough to believe you can rewrite the rules.
+                    I don't wait for the perfect moment. I build the solution, ship it, and let the work do the talking.
                 </div>
             </div>
         </div>
@@ -840,25 +1261,37 @@ body.dark-mode .project-card h3 {
             <div class="skill-category">
                 <h3><i class="fas fa-cogs"></i> Hard Skills</h3>
                 <div class="skill-item">
-                    <span>Engineering Design</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 95%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <span>AI & Automation</span>
+                    <span>App Development (PWA/Android)</span>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width: 90%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
+                    <span>AI-Powered Building</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
                     <span>Web Development</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 88%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span>Data Analysis & Dashboards</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 82%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span>CAD/CAM (Solid Edge & AutoCAD)</span>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width: 85%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
-                    <span>Data Analysis</span>
+                    <span>Graphics & Photo Editing</span>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width: 88%"></div>
                     </div>
@@ -899,94 +1332,224 @@ body.dark-mode .project-card h3 {
         <h2 class="section-title">How I Change the Game</h2>
         <div class="services-grid">
             <div class="service-card">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>App Development</h3>
+                <p>Building real, fully functional web apps and Android PWAs that solve genuine problems — connected to backends, synced across devices, and ready for real users.</p>
+            </div>
+            <div class="service-card">
                 <div class="service-icon"><i class="fas fa-code"></i></div>
-                <h3>Custom Website Development</h3>
-                <p>Creating stunning, functional websites that tell your story and convert visitors into customers with cutting-edge design and flawless user experience.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-robot"></i></div>
-                <h3>AI Voice Assistants</h3>
-                <p>Developing intelligent voice solutions that go beyond Siri and Alexa, creating personalized AI companions for businesses and individuals.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-drafting-compass"></i></div>
-                <h3>Engineering Design</h3>
-                <p>Mechanical engineering solutions that solve real-world problems, from water treatment systems to innovative product design and optimization.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-edit"></i></div>
-                <h3>Thesis & Research Editing</h3>
-                <p>Transforming complex research into clear, compelling narratives that get published and make impact in academic and professional circles.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-rocket"></i></div>
-                <h3>Startup Branding</h3>
-                <p>Building brand identities that capture the essence of innovation, creating memorable experiences that resonate with your target audience.</p>
+                <h3>Website Development</h3>
+                <p>Creating stunning, fast, and professional websites for businesses and individuals — deployed and live, not just mockups. From portfolios to full service websites.</p>
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fas fa-chart-bar"></i></div>
-                <h3>Data Analysis</h3>
-                <p>Turning raw data into actionable insights using advanced statistical methods, helping businesses make informed decisions that drive growth.</p>
+                <h3>Data Analytics & Dashboards</h3>
+                <p>Turning raw data into clear, beautiful dashboards that tell the real story behind the numbers — built for decision-makers who need answers, not just charts.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-drafting-compass"></i></div>
+                <h3>CAD/CAM Engineering</h3>
+                <p>Professional mechanical design and engineering using Solid Edge and AutoCAD — from concept sketches to precise technical drawings ready for manufacturing.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>Graphics & Photo Editing</h3>
+                <p>High-speed, high-quality graphics design and photo editing powered by modern tools — flyers, branding, visuals, and edits delivered with precision and creativity.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-laptop"></i></div>
+                <h3>IT Support & Computer Services</h3>
+                <p>Windows installation, software setup, system activation, antivirus, and all software-related fixes — fast, reliable, and professional tech support.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+                <h3>Document & Thesis Editing</h3>
+                <p>Expert proofreading, editing, formatting, and paraphrasing for academic and professional documents — structured, polished, and submission-ready.</p>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
+        <!-- Projects Section -->
     <section id="projects" class="fade-in">
         <h2 class="section-title">Proof of Impact</h2>
         <div class="projects-filter">
             <button class="filter-btn active" data-filter="all">All Projects</button>
-            <button class="filter-btn" data-filter="engineering">Engineering</button>
-            <button class="filter-btn" data-filter="ai">AI & Tech</button>
-            <button class="filter-btn" data-filter="business">Business</button>
+            <button class="filter-btn" data-filter="app">Apps</button>
+            <button class="filter-btn" data-filter="web">Websites</button>
+            <button class="filter-btn" data-filter="data">Data Analytics</button>
         </div>
         <div class="projects-grid">
-            <div class="project-card" data-category="engineering">
-                <div class="project-image">
-                    <i class="fas fa-water"></i>
+
+            <!-- The Optimist -->
+            <div class="project-card" data-category="app">
+                <div class="project-card-cover">
+                    <img src="Dashboard.png" alt="The Optimist — main dashboard">
                 </div>
-                <div class="project-content">
-                    <h3>Water Treatment System</h3>
-                    <p>Engineered a comprehensive water treatment solution for dugout communities, improving water quality for over 5,000 people and reducing waterborne diseases by 80%.</p>
+                <div class="project-card-body">
+                    <h3>The Optimist</h3>
+                    <p class="project-card-excerpt">Turn financial confusion into total clarity.</p>
+                    <ul class="project-card-highlights">
+                        <li>Complete personal finance management system</li>
+                        <li>Real-time budgeting and smart alerts</li>
+                        <li>AI-powered financial guidance</li>
+                    </ul>
                     <div class="project-tags">
-                        <span class="tag">Engineering</span>
-                        <span class="tag">Community Impact</span>
-                        <span class="tag">Sustainability</span>
+                        <span class="tag">PWA</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Supabase</span>
+                        <span class="tag">AI-assisted</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="optimist">View Project</button>
+                        <a href="https://theoptimist.pages.dev/" class="btn-project-live" target="_blank" rel="noopener">Live App ↗</a>
                     </div>
                 </div>
             </div>
-            <div class="project-card" data-category="business">
-                <div class="project-image">
-                    <i class="fas fa-heartbeat"></i>
+
+            <!-- StockPulse -->
+            <div class="project-card" data-category="app">
+                <div class="project-card-cover">
+                    <img src="SP-Dashboard.png" alt="StockPulse — supervisor dashboard">
                 </div>
-                <div class="project-content">
-                    <h3>BechCare AI Startup</h3>
-                    <p>Conceptualized and developed a healthcare AI platform that provides personalized medical guidance, reducing consultation wait times by 60% in pilot programs.</p>
+                <div class="project-card-body">
+                    <h3>StockPulse</h3>
+                    <p class="project-card-excerpt">Stop counting stock every week — automate it.</p>
+                    <ul class="project-card-highlights">
+                        <li>Automated inventory tracking system</li>
+                        <li>Daily usage logging with real-time updates</li>
+                        <li>Instant report generation and sharing</li>
+                    </ul>
                     <div class="project-tags">
-                        <span class="tag">Startup</span>
-                        <span class="tag">Healthcare</span>
-                        <span class="tag">AI</span>
+                        <span class="tag">PWA</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Reports</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="stockpulse">View Project</button>
+                        <a href="https://stockpulse-pb.pages.dev/" class="btn-project-live" target="_blank" rel="noopener">Live App ↗</a>
                     </div>
                 </div>
             </div>
-            <div class="project-card" data-category="ai">
-                <div class="project-image">
-                    <i class="fas fa-microphone-alt"></i>
+
+            <!-- IMS Fee App -->
+            <div class="project-card" data-category="app">
+                <div class="project-card-cover">
+                    <img src="IMS-Dash.png" alt="IMS Fee App — main dashboard">
                 </div>
-                <div class="project-content">
-                    <h3>Voice Assistant Beyond Siri</h3>
-                    <p>Created an advanced voice AI system with emotional intelligence and contextual understanding, capable of maintaining meaningful conversations and learning user preferences.</p>
+                <div class="project-card-body">
+                    <h3>IMS Fee App</h3>
+                    <p class="project-card-excerpt">Know exactly what to pay before you arrive.</p>
+                    <ul class="project-card-highlights">
+                        <li>Real-time fee calculation system</li>
+                        <li>Weekly dollar rate updates</li>
+                        <li>Eliminates client uncertainty and wasted trips</li>
+                    </ul>
                     <div class="project-tags">
-                        <span class="tag">AI</span>
-                        <span class="tag">Voice Tech</span>
-                        <span class="tag">Innovation</span>
+                        <span class="tag">PWA</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Non-citizens Ghana</span>
+                        <span class="tag">Live fees</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="ims">View Project</button>
+                        <a href="https://nia-fees.pages.dev/" class="btn-project-live" target="_blank" rel="noopener">Live App ↗</a>
                     </div>
                 </div>
             </div>
+
+            <!-- Furniture Sales Dashboard -->
+            <div class="project-card" data-category="data">
+                <div class="project-card-cover project-card-cover--contain">
+                    <img src="Furniture_Sales_Dashboard-.png" alt="Furniture sales dashboard preview" class="img-fallback-chain" data-fallback-srcs="Furniture_Sales_Dashboard.png,Furniture_Sales_Dashboard.svg">
+                </div>
+                <div class="project-card-body">
+                    <h3>Furniture Sales Dashboard</h3>
+                    <p class="project-card-excerpt">Uncovering hidden profit leaks in sales performance.</p>
+                    <ul class="project-card-highlights">
+                        <li>$741K+ sales data analyzed</li>
+                        <li>Identified low profit margins</li>
+                        <li>Revealed operational inefficiencies</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span class="tag">Excel</span>
+                        <span class="tag">Sales analytics</span>
+                        <span class="tag">Profit insights</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="furniture">View Project</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing Campaign Dashboard -->
+            <div class="project-card" data-category="data">
+                <div class="project-card-cover project-card-cover--contain">
+                    <img src="Marketing_Performance_Dashboard%20.png" alt="Marketing performance dashboard preview" class="img-fallback-chain" data-fallback-srcs="Marketing_Performance_Dashboard.png,Marketing_Performance_Dashboard_.png,Marketing_Performance_Dashboard.svg">
+                </div>
+                <div class="project-card-body">
+                    <h3>Marketing Campaign Dashboard</h3>
+                    <p class="project-card-excerpt">Massive reach means nothing without conversion.</p>
+                    <ul class="project-card-highlights">
+                        <li>1.1B impressions analyzed</li>
+                        <li>Conversion funnel breakdown</li>
+                        <li>ROI optimization insights</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span class="tag">Excel</span>
+                        <span class="tag">Campaign analytics</span>
+                        <span class="tag">ROI</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="marketing">View Project</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PrimeDraft Website -->
+            <div class="project-card" data-category="web">
+                <div class="project-card-cover">
+                    <img src="Primed.png" alt="PrimeDraft Services — site preview">
+                </div>
+                <div class="project-card-body">
+                    <h3>PrimeDraft Services</h3>
+                    <p class="project-card-excerpt">Business site for document editing &amp; proofreading: services, testimonials, and quote flow — deployed and live on Vercel.</p>
+                    <div class="project-tags">
+                        <span class="tag">Website</span>
+                        <span class="tag">Business</span>
+                        <span class="tag">Deployed</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="primed">View Project</button>
+                        <a href="https://primedraftservices.vercel.app" class="btn-project-live" target="_blank" rel="noopener">Visit Site ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BenchTech Support Website -->
+            <div class="project-card" data-category="web">
+                <div class="project-card-cover">
+                    <img src="BenchTech.png" alt="BenchTech Support — site preview">
+                </div>
+                <div class="project-card-body">
+                    <h3>BenchTech Support</h3>
+                    <p class="project-card-excerpt">IT support brand site: Windows &amp; Office setup, antivirus, software fixes, and emergency help — live on GitHub Pages.</p>
+                    <div class="project-tags">
+                        <span class="tag">Website</span>
+                        <span class="tag">IT Services</span>
+                        <span class="tag">Deployed</span>
+                    </div>
+                    <div class="project-card-actions">
+                        <button type="button" class="btn-view-project" data-project="benchtech">View Project</button>
+                        <a href="https://benchog.github.io/BenchTech-Support/" class="btn-project-live" target="_blank" rel="noopener">Visit Site ↗</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- Contact Section -->
+        <!-- Contact Section -->
     <section id="contact" class="fade-in">
         <h2 class="section-title">Let's Build the Future</h2>
         <div class="contact-content">
@@ -995,19 +1558,19 @@ body.dark-mode .project-card h3 {
                 <p>Whether you need a cutting-edge solution, want to collaborate on an innovative project, or simply want to discuss the future of technology, I'm here to turn possibilities into realities.</p>
                 
                 <div class="social-links">
-                    <a href="https://github.com/Benchog" class="social-link" title="GitHub" target="_blank">
+                    <a href="https://github.com/Benchog" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/patrick-benchog?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BYHzY4QzESnK%2BrTN73X5qvg%3D%3D" class="social-link" title="LinkedIn" target="_blank">
+                    <a href="https://www.linkedin.com/in/patrick-benchog" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://tiktok.com/@king_optimistic_" class="social-link" title="TikTok" target="_blank">
+                    <a href="https://www.tiktok.com/@king_optimistic_" class="social-link" title="TikTok" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-tiktok"></i>
                     </a>
-                    <a href="https://wa.me/233240025563" class="social-link" title="WhatsApp" target="_blank">
+                    <a href="https://wa.me/233240025563" class="social-link" title="WhatsApp" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:pat.benchog@gmail.com" class="social-link" title="Email">
+                    <a href="mailto:pat.benchog@gmail.com" class="social-link" title="Email pat.benchog@gmail.com" rel="noopener noreferrer">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -1015,12 +1578,20 @@ body.dark-mode .project-card h3 {
         </div>
     </section>
 
+    <div id="projectModal" class="project-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+        <div class="project-modal-backdrop" data-close-modal tabindex="-1"></div>
+        <div class="project-modal-panel">
+            <button type="button" class="project-modal-close" data-close-modal aria-label="Close">&times;</button>
+            <div class="project-modal-scroll" id="projectModalBody"></div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-mantra">
             "Built with optimism. Powered by innovation. Driven to leave a mark on this world."
         </div>
-        <p>&copy; 2025 Patrick Benchog - Optimistic. All rights reserved.</p>
+        <p>&copy; 2026 Patrick Benchog - Optimistic. All rights reserved.</p>
     </footer>
 
     <script>
@@ -1044,7 +1615,7 @@ body.dark-mode .project-card h3 {
 
         // Rotating text animation
         function animateRotatingText() {
-            const texts = ['Engineer', 'Innovator', 'Dream Chaser', 'Problem Solver', 'Future Builder'];
+            const texts = ['App Builder', 'Problem Solver', 'Innovator', 'AI Builder', 'Solution Creator', 'Dream Chaser'];
             const rotatingElement = document.getElementById('rotatingText');
             let currentIndex = 0;
             
@@ -1095,9 +1666,19 @@ body.dark-mode .project-card h3 {
         function initSmoothScrolling() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#' || href.length < 2) {
+                        return;
+                    }
                     e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
+                    const target = document.querySelector(href);
                     if (target) {
+                        if (this.closest('.nav-links')) {
+                            document.querySelectorAll('.nav-links a').forEach(function (l) {
+                                l.classList.remove('active');
+                            });
+                            this.classList.add('active');
+                        }
                         target.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start'
@@ -1310,13 +1891,13 @@ body.dark-mode .project-card h3 {
             } else if (msg.includes("who are you") || msg.includes("benchog") || msg.includes("patrick") || msg.includes("about you")) {
                 reply = "I'm Optimistic, an AI chatbot built into Patrick's portfolio. Patrick is a visionary mechanical engineer, AI innovator, and creative leader from Ghana.";
             } else if (msg.includes("skills") || msg.includes("what can you do") || msg.includes("abilities")) {
-                reply = "Patrick's skills include Mechanical Engineering Design, Web Development, AI & Automation, Data Analysis, Leadership, and Problem-Solving.";
+                reply = "Patrick's skills include App Development (PWA & Android), AI-powered building, Web Development, Data Analytics, CAD/CAM (Solid Edge & AutoCAD), Graphics Design, IT Support, and Document Editing.";
             } else if (msg.includes("projects") || msg.includes("what have you built") || msg.includes("portfolio")) {
-                reply = "Patrick's projects include a Water Treatment System for dugout communities, BechCare AI for healthcare, and a Voice Assistant Beyond Siri. Check them out in the Projects section above!";
+                reply = "Patrick has built several real apps and websites: The Optimist (personal finance), StockPulse (inventory automation), IMS Fee App (fees for non-citizens in Ghana), plus Excel dashboards (furniture sales & marketing campaigns), PrimeDraft and BenchTech websites. All live and deployed!";
             } else if (msg.includes("services") || msg.includes("what do you offer") || msg.includes("what services")) {
-                reply = "Patrick offers Custom Web Development, AI Voice Assistants, Mechanical Engineering Design, Data Analysis, Thesis Editing, and Startup Branding.";
+                reply = "Patrick offers: App Development, Website Development, Data Analytics & Dashboards, CAD/CAM Engineering, Graphics & Photo Editing, IT Support & Computer Services, and Document & Thesis Editing.";
             } else if (msg.includes("contact") || msg.includes("how do i reach you") || msg.includes("email") || msg.includes("whatsapp")) {
-                reply = "You can reach Patrick via the contact section below, on WhatsApp: https://wa.me/233XXXXXXXXX, or email: yourmail@example.com.";
+                reply = "You can reach Patrick via the contact section below, on WhatsApp: https://wa.me/233240025563, or email: pat.benchog@gmail.com.";
             } else if (msg.includes("thank")) {
                 reply = "You're always welcome boss! 🚀 Let me know if you need anything else.";
             } else if (msg.includes("bye") || msg.includes("goodbye")) {
@@ -1372,6 +1953,366 @@ body.dark-mode .project-card h3 {
                 if (hero && particles) {
                     particles.style.transform = `translateY(${scrolled * 0.5}px)`;
                 }
+                
+            });
+        }
+
+        const PROJECT_CATALOG = {
+            optimist: {
+                title: 'The Optimist',
+                subtitle: 'Personal Finance Intelligence System',
+                liveUrl: 'https://theoptimist.pages.dev/',
+                liveLabel: 'Open live app ↗',
+                tags: ['PWA', 'Flutter', 'Supabase', 'AI-assisted'],
+                detailSections: [
+                    { title: 'Summary', body: 'A full-featured personal finance system designed to help users track, manage, and grow their money with complete clarity and control.' },
+                    { title: 'The Problem', body: 'Many people struggle with managing their finances, not because they don\'t earn enough, but because they lack visibility into where their money goes. This leads to overspending, poor savings habits, and financial stress.' },
+                    { title: 'The Solution', body: 'I designed and built a complete personal finance management system that allows users to track income, expenses, savings, and debts in one place, while receiving real-time insights and alerts.' },
+                    { title: 'Key Features', items: [
+                        'Expense and income tracking',
+                        'Smart budgeting with real-time alerts',
+                        'Savings tracking across multiple accounts',
+                        'Debt management system',
+                        'AI-powered financial coach',
+                        'Financial reports generation',
+                        'Goal tracking and group savings (Arena & Split features)',
+                        'Cross-device data synchronization'
+                    ]},
+                    { title: 'Impact', body: 'This system transforms financial confusion into structured, trackable insights, helping users make better financial decisions and stay in control of their money.' },
+                    { title: 'Tech Stack', body: 'Flutter / Android Studio · Supabase / Firebase · AI-assisted development (Cursor, Claude)' },
+                    { title: 'My Role', body: 'Designed the system structure, guided AI tools in development, implemented core features, and handled testing and improvements.' },
+                    { title: 'What I Learned', body: 'Improved my ability to design complex systems, manage multiple financial features, and effectively use AI tools to accelerate development.' }
+                ],
+                gallery: [
+                    { file: 'Dashboard.png', caption: 'Main dashboard' },
+                    { file: 'Money.png', caption: 'Money & accounts' },
+                    { file: 'Coach.png', caption: 'AI Finance Coach' },
+                    { file: 'Reports.png', caption: 'Reports' },
+                    { file: 'Arena.png', caption: 'Arena' },
+                    { file: 'About.png', caption: 'About' }
+                ]
+            },
+            stockpulse: {
+                title: 'StockPulse',
+                subtitle: 'Intelligent Inventory Tracker',
+                liveUrl: 'https://stockpulse-pb.pages.dev/',
+                liveLabel: 'Open live app ↗',
+                tags: ['PWA', 'Flutter', 'Automation', 'Reports'],
+                detailSections: [
+                    { title: 'Summary', body: 'A smart inventory management system built to eliminate repetitive manual stock counting and streamline reporting.' },
+                    { title: 'The Problem', body: 'Manual stock counting is time-consuming, stressful, and prone to human error, especially when dealing with large quantities of items weekly.' },
+                    { title: 'The Solution', body: 'I built a system that allows one-time stock recording and tracks daily usage automatically, eliminating the need for full recounts every week.' },
+                    { title: 'Key Features', items: [
+                        'One-time stock capture',
+                        'Daily usage logging',
+                        'Automated stock calculations',
+                        'Weekly stock reminders',
+                        'WhatsApp report sharing',
+                        'PDF report generation'
+                    ]},
+                    { title: 'Impact', body: 'Reduces hours of manual work, improves accuracy, and simplifies the entire stock management process.' },
+                    { title: 'Tech Stack', body: 'Android Studio / Flutter · Backend integration · AI-assisted development (Cursor, Claude)' },
+                    { title: 'My Role', body: 'Designed the workflow, built the system using AI tools, and implemented automation for stock tracking and reporting.' },
+                    { title: 'What I Learned', body: 'Learned how to design efficient tracking systems and automate repetitive real-world tasks.' }
+                ],
+                gallery: [
+                    { file: 'SP-Dashboard.png', caption: 'Supervisor dashboard' },
+                    { file: 'SP-Pages.png', caption: 'Navigation & pages' },
+                    { file: 'SP-Log Stock.png', caption: 'Log stock usage' },
+                    { file: 'SP-Log Reg.png', caption: 'Registration / log' },
+                    { file: 'SP-Stock Count.png', caption: 'Stock count' },
+                    { file: 'SP-Insights.png', caption: 'Insights' },
+                    { file: 'SP-Reports.png', caption: 'Reports' },
+                    { file: 'SP-Supervisor.png', caption: 'Supervisor tools' }
+                ]
+            },
+            ims: {
+                title: 'IMS Fee App',
+                subtitle: 'Smart Client Payment System',
+                liveUrl: 'https://nia-fees.pages.dev/',
+                liveLabel: 'Open live app ↗',
+                tags: ['PWA', 'Flutter', 'Non-citizens Ghana', 'Live fees'],
+                detailSections: [
+                    { title: 'Summary', body: 'A dynamic fee management system that helps clients know exactly what to pay before visiting the office.' },
+                    { title: 'The Problem', body: 'Clients often travel long distances without knowing the exact fees or requirements, leading to wasted time, money, and frustration.' },
+                    { title: 'The Solution', body: 'I built a system where the admin updates the weekly dollar rate, and the app automatically calculates service fees while displaying all requirements clearly to clients.' },
+                    { title: 'Key Features', items: [
+                        'Real-time fee calculation',
+                        'Weekly rate updates by admin',
+                        'Clear service requirements display',
+                        'Simple and user-friendly interface'
+                    ]},
+                    { title: 'Impact', body: 'Eliminates confusion, reduces unnecessary travel, and improves overall client experience and operational efficiency.' },
+                    { title: 'Tech Stack', body: 'Android Studio / Flutter · Backend logic integration · AI-assisted development (Cursor, Claude)' },
+                    { title: 'My Role', body: 'Identified the problem, designed the solution, and built the system using AI-assisted tools.' },
+                    { title: 'What I Learned', body: 'Improved my ability to build solutions that directly impact real users and solve operational challenges.' }
+                ],
+                gallery: [
+                    { file: 'IMS-Dash.png', caption: 'Main dashboard' },
+                    { file: 'IMS-Dash-1.png', caption: 'Dashboard view' },
+                    { file: 'IMS-Dash-2.png', caption: 'Dashboard detail' },
+                    { file: 'IMS-Sign In.png', caption: 'Sign in' },
+                    { file: 'IMS-Admin.png', caption: 'Admin' },
+                    { file: 'IMS-Req.png', caption: 'Requirements' },
+                    { file: 'IMS-Expiry.png', caption: 'Expiry / notices' }
+                ]
+            },
+            furniture: {
+                title: 'Furniture Sales Dashboard',
+                subtitle: 'Excel analytics · Sales & profit',
+                liveUrl: '',
+                liveLabel: '',
+                tags: ['Excel', 'Sales analytics', 'Profit insights'],
+                detailSections: [
+                    { title: 'Summary', body: 'An Excel-based analytics dashboard built to uncover performance insights and profit inefficiencies in furniture sales data.' },
+                    { title: 'The Problem', body: 'Businesses often generate high sales but struggle to understand why profits remain low due to hidden inefficiencies in operations and pricing.' },
+                    { title: 'The Solution', body: 'I developed a dashboard that analyzes sales, profit, delivery, and category performance to reveal actionable insights.' },
+                    { title: 'Key Features', items: [
+                        'Sales and profit analysis',
+                        'City-level performance breakdown',
+                        'Product category insights',
+                        'Delivery time analysis',
+                        'Shipping mode distribution'
+                    ]},
+                    { title: 'Key Insights', items: [
+                        'Over $741K in total sales but only $18.5K profit',
+                        'New York contributed over 31% of total revenue',
+                        'Chairs generated 44% of total sales',
+                        '59% of orders used standard shipping',
+                        'Heavy discounting reduced profitability'
+                    ]},
+                    { title: 'Impact', body: 'Helps decision-makers identify profit leaks, optimize logistics, and improve pricing strategies.' },
+                    { title: 'Tools Used', body: 'Microsoft Excel · Data visualization techniques' },
+                    { title: 'My Role', body: 'Followed a guided structure and independently analyzed the dataset to extract insights and build a clear, decision-focused dashboard.' },
+                    { title: 'What I Learned', body: 'Strengthened my ability to turn raw data into meaningful business insights and tell compelling data stories.' }
+                ],
+                gallery: [
+                    { file: 'Furniture_Sales_Dashboard-.png', caption: 'Full dashboard', fallback: 'Furniture_Sales_Dashboard.png', fallback2: 'Furniture_Sales_Dashboard.svg' }
+                ]
+            },
+            marketing: {
+                title: 'Marketing Campaign Dashboard',
+                subtitle: 'Campaign effectiveness & ROI',
+                liveUrl: '',
+                liveLabel: '',
+                tags: ['Excel', 'Campaign analytics', 'ROI'],
+                detailSections: [
+                    { title: 'Summary', body: 'A data analytics dashboard built to evaluate the effectiveness and ROI of a large-scale marketing campaign.' },
+                    { title: 'The Problem', body: 'Marketing campaigns often generate high visibility but fail to convert that attention into actual value.' },
+                    { title: 'The Solution', body: 'I analyzed campaign data across multiple cities to understand performance across impressions, clicks, conversions, and ROI.' },
+                    { title: 'Key Features', items: [
+                        'Conversion funnel analysis',
+                        'City-level performance comparison',
+                        'ROI evaluation',
+                        'Customer acquisition cost analysis'
+                    ]},
+                    { title: 'Key Insights', items: [
+                        '1.1 billion impressions generated',
+                        '110 million clicks recorded',
+                        'Only 8% conversion rate',
+                        'High acquisition cost (~$12.5K)',
+                        'Miami delivered the highest ROI'
+                    ]},
+                    { title: 'Impact', body: 'Reveals where marketing efforts succeed, where value is lost, and where future investment should be focused.' },
+                    { title: 'Tools Used', body: 'Microsoft Excel · Data visualization techniques' },
+                    { title: 'My Role', body: 'Built the dashboard based on guided learning and independently derived insights from the dataset.' },
+                    { title: 'What I Learned', body: 'Developed strong skills in analyzing marketing data and identifying performance gaps in conversion funnels.' }
+                ],
+                gallery: [
+                    { file: 'Marketing_Performance_Dashboard .png', caption: 'Full dashboard', fallback: 'Marketing_Performance_Dashboard.png', fallback2: 'Marketing_Performance_Dashboard_.png', fallback3: 'Marketing_Performance_Dashboard.svg' }
+                ]
+            },
+            primed: {
+                title: 'PrimeDraft Services',
+                paragraphs: [
+                    'A professional website for PrimeDraft — a document editing and proofreading service. Built with clean design, service breakdowns, client testimonials, and a quote request flow. Fully deployed and live.'
+                ],
+                liveUrl: 'https://primedraftservices.vercel.app',
+                liveLabel: 'Visit live site ↗',
+                tags: ['Website', 'Business', 'Deployed'],
+                gallery: [
+                    { file: 'Primed.png', caption: 'Homepage & key sections' }
+                ]
+            },
+            benchtech: {
+                title: 'BenchTech Support',
+                paragraphs: [
+                    'A professional tech support website for BenchTech — Windows installation, Office setup, antivirus, software configuration, and emergency IT support. Fast, reliable, and remote-friendly. Fully deployed and live.'
+                ],
+                liveUrl: 'https://benchog.github.io/BenchTech-Support/',
+                liveLabel: 'Visit live site ↗',
+                tags: ['Website', 'IT Services', 'Deployed'],
+                gallery: [
+                    { file: 'BenchTech.png', caption: 'Site preview' }
+                ]
+            }
+        };
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function buildProjectDetailBody(data) {
+            if (data.detailSections && data.detailSections.length) {
+                var html = '';
+                if (data.subtitle) {
+                    html += '<p class="project-modal-subtitle">' + escapeHtml(data.subtitle) + '</p>';
+                }
+                data.detailSections.forEach(function (sec) {
+                    html += '<div class="project-modal-section">';
+                    html += '<h3 class="project-modal-section-title">' + escapeHtml(sec.title) + '</h3>';
+                    if (sec.body) {
+                        html += '<p class="project-modal-lead">' + escapeHtml(sec.body) + '</p>';
+                    }
+                    if (sec.items && sec.items.length) {
+                        html += '<ul class="project-modal-list">';
+                        sec.items.forEach(function (item) {
+                            html += '<li>' + escapeHtml(item) + '</li>';
+                        });
+                        html += '</ul>';
+                    }
+                    html += '</div>';
+                });
+                return html;
+            }
+            if (data.paragraphs) {
+                return data.paragraphs.map(function (p) {
+                    return '<p class="project-modal-lead">' + escapeHtml(p) + '</p>';
+                }).join('');
+            }
+            return '';
+        }
+
+        function bindImgFallbackChain(root) {
+            const el = root && root.querySelectorAll ? root : document;
+            el.querySelectorAll('img.img-fallback-chain[data-fallback-srcs]').forEach(function (img) {
+                if (img.dataset.fallbackBound === '1') return;
+                img.dataset.fallbackBound = '1';
+                const parts = img.getAttribute('data-fallback-srcs').split(',').map(function (s) {
+                    return s.trim();
+                }).filter(Boolean);
+                let i = 0;
+                img.addEventListener('error', function () {
+                    if (i < parts.length) {
+                        img.src = parts[i];
+                        i += 1;
+                    }
+                });
+            });
+        }
+
+        function initActiveNavOnScroll() {
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            const sectionIds = ['hero', 'about', 'skills', 'services', 'projects', 'contact'];
+            const sections = sectionIds.map(function (id) {
+                return document.getElementById(id);
+            }).filter(Boolean);
+
+            function updateActive() {
+                const offset = Math.min(160, window.innerHeight * 0.32);
+                const scrollPos = window.scrollY + offset;
+                let activeId = 'hero';
+                sections.forEach(function (sec) {
+                    if (sec && sec.offsetTop <= scrollPos) {
+                        activeId = sec.id;
+                    }
+                });
+                navLinks.forEach(function (link) {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + activeId);
+                });
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    window.requestAnimationFrame(function () {
+                        updateActive();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+            updateActive();
+        }
+
+        function openProjectModal(slug) {
+            const data = PROJECT_CATALOG[slug];
+            if (!data) return;
+
+            const modal = document.getElementById('projectModal');
+            const body = document.getElementById('projectModalBody');
+            const tagsHtml = data.tags.map(function (t) {
+                return '<span class="tag">' + escapeHtml(t) + '</span>';
+            }).join('');
+
+            const detailHtml = buildProjectDetailBody(data);
+
+            const galleryHtml = data.gallery.map(function (g) {
+                const src = encodeURI(g.file);
+                const extras = [];
+                if (g.fallback) extras.push(g.fallback);
+                if (g.fallback2) extras.push(g.fallback2);
+                if (g.fallback3) extras.push(g.fallback3);
+                let imgTag = '<img src="' + src + '" alt="' + escapeHtml(g.caption) + '" loading="lazy"';
+                if (extras.length) {
+                    imgTag += ' class="img-fallback-chain" data-fallback-srcs="' +
+                        extras.map(function (f) { return encodeURI(f); }).join(',') + '"';
+                }
+                imgTag += '>';
+                return '<figure>' + imgTag +
+                    '<figcaption>' + escapeHtml(g.caption) + '</figcaption></figure>';
+            }).join('');
+
+            let actionsHtml = '';
+            if (data.liveUrl) {
+                actionsHtml = '<div class="project-modal-actions">' +
+                    '<a href="' + escapeHtml(data.liveUrl) + '" class="btn-project-live" target="_blank" rel="noopener">' +
+                    escapeHtml(data.liveLabel) + '</a></div>';
+            }
+
+            body.innerHTML =
+                '<h2 id="projectModalTitle">' + escapeHtml(data.title) + '</h2>' +
+                '<div class="project-tags">' + tagsHtml + '</div>' +
+                detailHtml +
+                actionsHtml +
+                '<h3 class="project-modal-gallery-heading">Screens &amp; detail</h3>' +
+                '<div class="project-modal-gallery">' + galleryHtml + '</div>';
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            bindImgFallbackChain(body);
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('projectModal');
+            if (!modal || !modal.classList.contains('is-open')) return;
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        }
+
+        function initProjectModal() {
+            const modal = document.getElementById('projectModal');
+            if (!modal) return;
+
+            document.querySelectorAll('.btn-view-project').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const slug = btn.getAttribute('data-project');
+                    if (slug) openProjectModal(slug);
+                });
+            });
+
+            modal.querySelectorAll('[data-close-modal]').forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    if (e.target === el) closeProjectModal();
+                });
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) closeProjectModal();
             });
         }
 
@@ -1381,6 +2322,7 @@ body.dark-mode .project-card h3 {
 document.getElementById('menuToggle').addEventListener('click', function() {
   const navLinks = document.querySelector('.nav-links');
   navLinks.classList.toggle('open');
+
 });
 
             createParticles();
@@ -1389,21 +2331,23 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             initSmoothScrolling();
             initScrollAnimations();
             initProjectFiltering();
+            initProjectModal();
+            bindImgFallbackChain(document.getElementById('projects'));
+            initActiveNavOnScroll();
             initTypingEffect();
             initVoiceGreeting();
             initChatbot();
             //initCursorTrail();
             initParallaxScrolling();
-            
+
             // Add scroll event listener
             window.addEventListener('scroll', handleNavbarScroll);
             
             // Add keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    // Close any open modals or overlays
+                    closeProjectModal();
                     document.querySelectorAll('.greeting, .modal').forEach(el => el.remove());
-
                 }
             });
         });
@@ -1512,27 +2456,6 @@ document.getElementById('menuToggle').addEventListener('click', function() {
                 }
             }
             
-            /* Hover effects for enhanced interactivity */
-            .nav-links a {
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .nav-links a::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
-                transition: left 0.5s ease;
-            }
-            
-            .nav-links a:hover::before {
-                left: 100%;
-            }
-            
             /* Enhanced accessibility */
             @media (prefers-reduced-motion: reduce) {
                 * {
@@ -1544,6 +2467,7 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             
             /* Focus styles for better accessibility */
             .cta-button:focus,
+            .btn-view-project:focus,
             .filter-btn:focus,
             .social-link:focus {
                 outline: 2px solid var(--accent-gold);
@@ -1577,7 +2501,6 @@ document.getElementById('menuToggle').addEventListener('click', function() {
             background: var(--accent-gold);
             color: var(--primary-blue);
             }
-            
         `;
         document.head.appendChild(style);
     </script>
