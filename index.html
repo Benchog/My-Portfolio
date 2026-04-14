@@ -642,6 +642,8 @@
             margin-bottom: 2rem;
             opacity: 0;
             animation: slideInUp 1s ease-out 1.5s forwards;
+            line-height: 1.5;
+            min-height: 1.5em; /* prevent reflow when rotating text changes */
         }
 
         .hero-cta-row {
@@ -651,6 +653,10 @@
         .rotating-text {
             color: var(--accent-gold);
             font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+            text-align: left;
+            width: 16ch; /* reserve space so swaps don't shift layout */
         }
 
         .cta-button {
