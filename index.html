@@ -635,6 +635,37 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
+        .proof-rotator {
+            margin-top: 1.05rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(10, 17, 40, 0.40);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(6px);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: rgba(255, 255, 255, 0.94);
+        }
+
+        .proof-rotator strong {
+            color: var(--accent-gold);
+        }
+
+        .proof-rotator .proof-rotator-text {
+            transition: opacity 220ms ease, transform 220ms ease;
+            will-change: opacity, transform;
+        }
+
+        .proof-rotator.is-fading .proof-rotator-text {
+            opacity: 0;
+            transform: translateY(2px);
+        }
+
         .project-impact {
             margin: -0.1rem 0 0.2rem;
             font-size: 0.8rem;
@@ -2147,6 +2178,16 @@
                 font-size: 0.72rem;
             }
 
+            /* De-clutter hero: use a single flowing proof line on mobile */
+            .proof-strip {
+                display: none;
+            }
+
+            .proof-rotator {
+                display: inline-flex;
+                max-width: 100%;
+            }
+
             section {
                 padding: clamp(3rem, 10vw, 4rem) max(1rem, env(safe-area-inset-left)) clamp(3rem, 10vw, 4rem) max(1rem, env(safe-area-inset-right));
             }
@@ -2475,6 +2516,10 @@
                 <span class="proof-chip">Fast execution with quality</span>
             </div>
 
+            <p class="proof-rotator" id="proofRotator" aria-live="polite">
+                <strong>Proof:</strong> <span class="proof-rotator-text" id="proofRotatorText">Shipped apps &amp; websites</span>
+            </p>
+
         </div>
     </section>
 
@@ -2486,7 +2531,7 @@
                 <img src="1750806398142.jpeg" alt="Benchog Patrick">
             </div>
             <div class="about-text">
-                <p>I am <strong>Patrick Benchog</strong>, a <strong>Mechanical Engineer</strong> based in Techiman, Ghana. I studied Mechanical Engineering at the university, and I design and ship practical apps, websites, and dashboards that solve real operational problems.</p>
+                <p>I am <strong>Patrick Benchog</strong> — a <strong>Mechanical Engineer</strong>, a <strong>tech-forward builder</strong>, and a product-focused executor. I studied Mechanical Engineering at the university, and I design and ship practical apps, websites, and dashboards that solve real operational problems.</p>
                 <p>My focus is simple: identify friction, build fast, and deliver solutions people can actually use. I work across Flutter/Android, web development, analytics dashboards, and AI-assisted product execution.</p>
             </div>
         </div>
@@ -2998,6 +3043,33 @@
                     rotatingElement.style.opacity = '1';
                 }, 300);
             }, 3000);
+        }
+
+        function initProofRotator() {
+            const root = document.getElementById('proofRotator');
+            const textEl = document.getElementById('proofRotatorText');
+            if (!root || !textEl) return;
+
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) return;
+
+            const items = [
+                'Shipped apps & websites',
+                'Measurable business impact',
+                'Fast execution with quality'
+            ];
+
+            let idx = 0;
+            const tick = () => {
+                root.classList.add('is-fading');
+                window.setTimeout(() => {
+                    idx = (idx + 1) % items.length;
+                    textEl.textContent = items[idx];
+                    root.classList.remove('is-fading');
+                }, 240);
+            };
+
+            window.setInterval(tick, 3200);
         }
 
         function setTheme(mode) {
@@ -4049,6 +4121,7 @@
 
             createParticles();
             animateRotatingText();
+            initProofRotator();
             loadDarkMode();
             loadColorScheme();
             document.getElementById('themePanelOpen').addEventListener('click', function () {
